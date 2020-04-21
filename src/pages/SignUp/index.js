@@ -2,20 +2,23 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo-full.png";
 
-// import { Container } from './styles';
+import { Images } from "./styles";
 
 export default function SignIn() {
   return (
     <>
-      <img src={logo} alt="Fábrica Sim" />
+      <Images>
+        <img src={logo} alt="Fábrica Sim" />
+      </Images>
 
       <form>
+        <input type="email" placeholder="Nome completo" />
         <input type="email" placeholder="E-mail" />
         <input type="text" placeholder="Ocupação" />
         <input type="text" placeholder="Celular" />
-        <input type="text" placeholder="Páis" />
+        <input type="text" placeholder="País" />
         <input type="text" placeholder="Estado" />
         <input type="password" placeholder="Senha" />
         <input type="password" placeholder="Confirmar senha" />
