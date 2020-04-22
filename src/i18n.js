@@ -33,6 +33,7 @@ const resources = {
       Senha: "Senha",
       "Confirmar senha": "Confirmar senha",
       "Já tenho login": "Já tenho login",
+      "As senhas não coincidem": "As senhas não coincidem.",
     },
   },
   es: {
