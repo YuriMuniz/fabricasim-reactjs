@@ -28,7 +28,7 @@ export default function SignIn() {
       .email(t("Insira um e-mail válido"))
       .required(t("O email é obrigatório")),
     occupation: Yup.string().required(t("A ocupação é obrigatória")),
-    cellNumber: Yup.number().required(t("O celular é obrigatório")),
+    cellNumber: Yup.string().required(t("O celular é obrigatório")),
     // country: Yup.string().required(t("O país é obrigatório")),
     state: Yup.string(),
     password: Yup.string()
@@ -108,7 +108,7 @@ export default function SignIn() {
         <Input name="name" type="text" placeholder={t("Nome completo")} />
         <Input name="email" type="email" placeholder={t("E-mail")} />
         <Input name="occupation" type="text" placeholder={t("Ocupação")} />
-        <Input name="cellNumber" type="text" placeholder={t("Celular")} />
+        <Input name="cellNumber" type="number" placeholder={t("Celular")} />
 
         <select
           size="number"
