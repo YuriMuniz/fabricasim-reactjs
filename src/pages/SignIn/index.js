@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
@@ -14,15 +14,16 @@ import logo from "../../assets/logo.png";
 import lt from "../../assets/logo-text-white.png";
 import { Images } from "./styles";
 
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Insira um e-mail válido")
-    .required("O email é Obrigatório"),
-  password: Yup.string().required("A senha é obrigatória."),
-});
-
 export default function SignIn() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const schema = Yup.object().shape({
+    email: Yup.string()
+      .email(t("Insira um e-mail válido"))
+      .required(t("O e-mail é obrigatório")),
+    password: Yup.string().required(t("A senha é obrigatória")),
+  });
 
   const loading = useSelector((state) => state.auth.loading);
 
@@ -42,12 +43,14 @@ export default function SignIn() {
         />
       </Images>
       <Form schema={schema} onSubmit={handleSubmit}>
-        <Input name="email" type="email" placeholder="Seu e-mail" />
-        <Input name="password" type="password" placeholder="Sua senha" />
+        <Input name="email" type="email" placeholder={t("Seu e-mail")} />
+        <Input name="password" type="password" placeholder={t("Sua senha")} />
 
-        <button type="submit">{loading ? "Carregando..." : "Acessar"}</button>
+        <button type="submit">
+          {loading ? `${t("Carregando")}...` : t("Acessar")}
+        </button>
 
-        <Link to="/register">Criar conta</Link>
+        <Link to="/register">{t("Criar conta")}</Link>
       </Form>
     </>
   );

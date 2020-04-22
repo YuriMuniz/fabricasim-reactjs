@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { Form, Input } from "@rocketseat/unform";
@@ -11,19 +11,23 @@ import listHelper from "../../util/listHelper";
 import { Images } from "./styles";
 
 export default function SignIn() {
+  const { t } = useTranslation();
+
   const schema = Yup.object().shape({
-    name: Yup.string().required("O nome é obrigatório."),
+    name: Yup.string().required(t("O nome é obrigatório")),
     email: Yup.string()
-      .email("Insira um e-mail válido.")
-      .required("O email é Obrigatório."),
-    occupation: Yup.string().required("A ocupação é obrigatória."),
-    cellNumber: Yup.number().required("O celular é obrigatório."),
-    country: Yup.string().required("O país é obrigatório."),
-    state: Yup.string().required("O estado é obrigatório."),
+      .email(t("Insira um e-mail válido"))
+      .required(t("O email é obrigatório")),
+    occupation: Yup.string().required(t("A ocupação é obrigatória")),
+    cellNumber: Yup.number().required(t("O celular é obrigatório")),
+    country: Yup.string().required(t("O país é obrigatório")),
+    state: Yup.string().required(t("O estado é obrigatório")),
     password: Yup.string()
-      .min(6, "A senha deve conter no mínimo 6 caracteres.")
-      .required("A senha é obrigatória."),
-    confirmPass: Yup.string().required("A confirmação da senha é obrigatória."),
+      .min(6, t("A senha deve conter no mínimo 6 caracteres"))
+      .required(t("A senha é obrigatória")),
+    confirmPass: Yup.string().required(
+      t("A confirmação da senha é obrigatória")
+    ),
   });
 
   const [isBr, setIsBr] = useState(false);
@@ -31,7 +35,7 @@ export default function SignIn() {
   let state;
   if (isBr) {
     state = (
-      <select placeholder="Estado" size="number" defaultValue="Estado">
+      <select placeholder={t("Estado")} size="number" defaultValue="Estado">
         <option value="1" disabled selected>
           Estado
         </option>
@@ -44,7 +48,7 @@ export default function SignIn() {
       </select>
     );
   } else {
-    state = <Input name="state" type="text" placeholder="Estado" />;
+    state = <Input name="state" type="text" placeholder={t("Estado")} />;
   }
 
   function handleCountryChange(event) {
@@ -67,13 +71,13 @@ export default function SignIn() {
       </Images>
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <Input name="name" type="text" placeholder="Nome completo" />
-        <Input name="email" type="email" placeholder="E-mail" />
-        <Input name="occupation" type="text" placeholder="Ocupação" />
-        <Input name="cellNumber" type="text" placeholder="Celular" />
+        <Input name="name" type="text" placeholder={t("Nome completo")} />
+        <Input name="email" type="email" placeholder={t("E-mail")} />
+        <Input name="occupation" type="text" placeholder={t("Ocupação")} />
+        <Input name="cellNumber" type="text" placeholder={t("Celular")} />
         <select
           name="country"
-          placeholder="País"
+          placeholder={t("País")}
           size="number"
           onChange={handleCountryChange}
         >
@@ -88,16 +92,16 @@ export default function SignIn() {
           ;
         </select>
         {state}
-        <Input name="password" type="password" placeholder="Senha" />
+        <Input name="password" type="password" placeholder={t("Senha")} />
         <Input
           name="confirmPass"
           type="password"
-          placeholder="Confirmar senha"
+          placeholder={t("Confirmar senha")}
         />
 
-        <button type="submit">Criar conta</button>
+        <button type="submit">{t("Criar conta")} </button>
 
-        <Link to="/">Já tenho login</Link>
+        <Link to="/">{t("Já tenho login")} </Link>
       </Form>
     </>
   );
