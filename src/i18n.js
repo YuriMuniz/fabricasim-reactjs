@@ -34,6 +34,11 @@ const resources = {
       "Confirmar senha": "Confirmar senha",
       "Já tenho login": "Já tenho login",
       "As senhas não coincidem": "As senhas não coincidem.",
+      "Sua senha atual": "Sua senha atual",
+      "Sua nova senha": "Sua nova senha",
+      "Confirmar nova senha": "Confirmar nova senha",
+      "Atualizar perfil": "Atualizar perfil",
+      Sair: "Sair",
     },
   },
   es: {
