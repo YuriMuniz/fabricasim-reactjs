@@ -23,7 +23,23 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token, user));
 
-    history.push("/profile");
+    const roles = [];
+    for (let x = 0; x < user.roles.length; x++) {
+      roles.push(user.roles[x]);
+    }
+    if (roles.includes("STUDENT") && roles.length === 1) {
+      history.push("/access-request");
+    }
+    if (roles.includes("TEACHER")) {
+      history.push("/create-groups");
+    }
+    if (
+      roles.includes("ADMIN") ||
+      roles.includes("ADMIN+") ||
+      roles.includes("SUPER")
+    ) {
+      history.push("/permissions");
+    }
   } catch (err) {
     toast.error("Falha na autenticação, verifique seus dados");
     yield put(signFailure());
@@ -71,8 +87,13 @@ export function setToken({ payload }) {
   }
 }
 
+export function signOut() {
+  history.push("/");
+}
+
 export default all([
   takeLatest("persist/REHYDRATE", setToken),
   takeLatest("@auth/SIGN_IN_REQUEST", signIn),
   takeLatest("@auth/SIGN_UP_REQUEST", signUp),
+  takeLatest("@auth/SIGN_OUT", signOut),
 ]);

@@ -39,6 +39,12 @@ const resources = {
       "Confirmar nova senha": "Confirmar nova senha",
       "Atualizar perfil": "Atualizar perfil",
       Sair: "Sair",
+      "Perfil Atualizado com sucesso": "Perfil Atualizado com sucesso",
+      "Erro ao atualizar perfil.": "Erro ao atualizar perfil.",
+      Permissões: "PERMISSÕES",
+      "Criar grupo": "CRIAR GRUPO",
+      "Meu perfil": "Meu perfil",
+      "Solicitar acesso": "SOLICITAR ACESSO",
     },
   },
   es: {

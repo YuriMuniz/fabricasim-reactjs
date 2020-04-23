@@ -34,7 +34,7 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "no-console": "off",
     "react/jsx-props-no-spreading": "off",
-    
+    "no-plusplus": "off",
   },
   settings: {
     "import/resolver": {

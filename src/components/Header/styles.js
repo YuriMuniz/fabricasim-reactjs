@@ -26,12 +26,40 @@ export const Content = styled.div`
     a {
       font-weight: bold;
       color: #6095b2;
+      margin-right: 15px;
+      padding-left: 15px;
+
+      & + a {
+        border-left: 0.5px solid #eee;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+    @media (max-width: 768px) {
+      img {
+        border-right: 0px;
+      }
+      a {
+        display: none;
+      }
     }
   }
 
   aside {
     display: flex;
     align-items: center;
+
+    #menu {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      #menu {
+        display: block;
+        margin-left: 30px;
+      }
+    }
   }
 `;
 
@@ -55,6 +83,14 @@ export const Profile = styled.div`
       margin-top: 2px;
       font-size: 12px;
       color: #6095b2;
+    }
+  }
+  @media (max-width: 768px) {
+    div {
+      display: none;
+    }
+    #account-ico {
+      display: none;
     }
   }
 `;
