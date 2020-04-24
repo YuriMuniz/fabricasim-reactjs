@@ -15,7 +15,7 @@ import { Container } from "./styles";
 
 export default function Profile() {
   const profile = useSelector((state) => state.user.profile);
-  console.log(profile);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 

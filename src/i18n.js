@@ -45,6 +45,7 @@ const resources = {
       "Criar grupo": "CRIAR GRUPO",
       "Meu perfil": "Meu perfil",
       "Solicitar acesso": "SOLICITAR ACESSO",
+      Pesquisar: "Pesquisar pelo e-mail",
     },
   },
   es: {
