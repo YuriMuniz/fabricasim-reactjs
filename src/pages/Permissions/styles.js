@@ -1,6 +1,26 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
+
+const rotate = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+`;
+
+export const IconSpinner = styled.div`
+  margin-top: 5px;
+  svg {
+    animation: ${rotate} 2s linear infinite;
+    align-items: center;
+    margin-left: -30px;
+
+    color: rgba(255, 255, 255, 0.7);
+  }
+`;
 
 export const InputGroup = styled.div`
   width: 600px;
@@ -8,11 +28,11 @@ export const InputGroup = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: 800px;
+  max-width: 600px;
   margin: 50px auto;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: space-between;
 
   form {
     margin-top: 30px;
@@ -45,7 +65,6 @@ export const Scroll = styled(PerfectScrollbar)`
 `;
 
 export const Users = styled.div`
-  position: absolute;
   width: 500px;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
@@ -85,22 +104,24 @@ export const User = styled.ul`
   }
 `;
 
+export const ContentUser = styled.div`
+  display: flex;
+  direction: row;
+  justify-content: space-around;
+`;
+
 export const SelectedUser = styled.div`
   margin-top: 30px;
-  width: 500px;
+  max-width: 500px;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   padding: 15px 5px;
-`;
-
-export const Data = styled.div`
-  color: rgba(255, 255, 255, 0.7);
-  padding: 10px;
-  font-size: 16px;
 
   button {
     width: 100%;
+    max-width: 500px;
+    align-self: center;
     margin: 20px 0 0;
     height: 44px;
     background: #6095b2;
@@ -111,6 +132,11 @@ export const Data = styled.div`
     font-size: 16px;
     transition: background 0.2;
   }
+`;
+
+export const Data = styled.div`
+  color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
 
   p {
     margin-bottom: 15px;
@@ -124,7 +150,7 @@ export const Checkbox = styled.div`
     align-items: center;
 
     & + p {
-      margin-top: 4px;
+      margin-top: 6px;
       padding-top: 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.7);
     }

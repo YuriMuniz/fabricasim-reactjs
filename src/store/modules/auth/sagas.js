@@ -22,24 +22,7 @@ export function* signIn({ payload }) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
-
-    const roles = [];
-    for (let x = 0; x < user.roles.length; x++) {
-      roles.push(user.roles[x]);
-    }
-    if (roles.includes("STUDENT") && roles.length === 1) {
-      history.push("/access-request");
-    }
-    if (roles.includes("TEACHER")) {
-      history.push("/create-groups");
-    }
-    if (
-      roles.includes("ADMIN") ||
-      roles.includes("ADMIN+") ||
-      roles.includes("SUPER")
-    ) {
-      history.push("/permissions");
-    }
+    history.push("/");
   } catch (err) {
     toast.error("Falha na autenticação, verifique seus dados");
     yield put(signFailure());

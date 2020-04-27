@@ -46,6 +46,11 @@ const resources = {
       "Meu perfil": "Meu perfil",
       "Solicitar acesso": "SOLICITAR ACESSO",
       Pesquisar: "Pesquisar pelo e-mail",
+      "Permissão salva": "Permissão salva.",
+      "Erro ao atribuir permissão": "Erro ao atribuir permissão.",
+      "Nenhum resultado": "Nenhum resultado",
+      Salvar: "Salvar",
+      "Você não tem permissão": "Você não tem permissão",
     },
   },
   es: {

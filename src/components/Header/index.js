@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useSelector } from "react-redux";
@@ -14,55 +14,28 @@ export default function Header() {
   const profile = useSelector((state) => state.user.profile);
   const { t } = useTranslation();
 
-  function handleLinkPermissionsVisible() {
-    const roles = [];
-    for (let x = 0; x < profile.roles.length; x++) {
-      roles.push(profile.roles[x]);
-    }
-    if (roles.includes("ADMIN")) {
-      return true;
-    }
-    return false;
-  }
+  const authorizateAccessRequest =
+    profile.roles.some((e) => ["STUDENT"].includes(e)) &&
+    profile.roles.length === 1;
+  const authorizateCreateGroups = profile.roles.some((e) =>
+    ["SUPER", "ADMIN+", "ADMIN", "TEACHER"].includes(e)
+  );
+  const authorizatePermissions = profile.roles.some((e) =>
+    ["SUPER", "ADMIN+", "ADMIN"].includes(e)
+  );
 
-  function handleCreateGroupsVisible() {
-    const roles = [];
-    for (let x = 0; x < profile.roles.length; x++) {
-      roles.push(profile.roles[x]);
-    }
-    if (roles.includes("TEACHER") || roles.includes("ADMIN")) {
-      return true;
-    }
-    return false;
-  }
-  function handleRequestAccessVisible() {
-    const roles = [];
-    for (let x = 0; x < profile.roles.length; x++) {
-      roles.push(profile.roles[x]);
-    }
-    if (roles.includes("STUDENT") && roles.length === 1) {
-      return true;
-    }
-    return false;
-  }
-
-  const [linkPermissionsVisible] = useState(handleLinkPermissionsVisible());
-  const [linkCreateGroupVisible] = useState(handleCreateGroupsVisible());
-  const [linkRequestAccessVisible] = useState(handleRequestAccessVisible());
-
-  console.log(linkPermissionsVisible);
   return (
     <Container>
       <Content>
         <nav>
           <img src={logo} alt="Fábrica Sim" />
-          {linkPermissionsVisible && (
+          {authorizatePermissions && (
             <Link to="/permissions">{t("Permissões")}</Link>
           )}
-          {linkCreateGroupVisible && (
+          {authorizateCreateGroups && (
             <Link to="/create-groups">{t("Criar grupo")}</Link>
           )}
-          {linkRequestAccessVisible && (
+          {authorizateAccessRequest && (
             <Link to="/access-request">{t("Solicitar acesso")}</Link>
           )}
         </nav>

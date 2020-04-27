@@ -2,6 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+import { FaSpinner } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import { Form, Input } from "@rocketseat/unform";
 
@@ -12,7 +14,7 @@ import { signInRequest } from "../../store/modules/auth/actions";
 import logo from "../../assets/logo.png";
 
 import lt from "../../assets/logo-text-white.png";
-import { Images } from "./styles";
+import { Images, Container } from "./styles";
 
 export default function SignIn() {
   const { t } = useTranslation();
@@ -32,7 +34,7 @@ export default function SignIn() {
   }
 
   return (
-    <>
+    <Container>
       <Images>
         <img src={logo} alt="Fábrica Sim" />
 
@@ -48,10 +50,11 @@ export default function SignIn() {
 
         <button type="submit">
           {loading ? `${t("Carregando")}...` : t("Acessar")}
+          {loading && <FaSpinner size={20} />}
         </button>
 
         <Link to="/register">{t("Criar conta")}</Link>
       </Form>
-    </>
+    </Container>
   );
 }

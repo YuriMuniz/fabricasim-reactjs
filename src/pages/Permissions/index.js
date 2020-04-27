@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Form, Input } from "@rocketseat/unform";
 import { MdSearch } from "react-icons/md";
+import { toast } from "react-toastify";
 
+import { FaSpinner } from "react-icons/fa";
 import api from "../../services/api";
 
 import {
@@ -15,6 +17,8 @@ import {
   SelectedUser,
   Data,
   Checkbox,
+  ContentUser,
+  IconSpinner,
 } from "./styles";
 
 export default function Permissions() {
@@ -24,22 +28,33 @@ export default function Permissions() {
   const profile = useSelector((state) => state.user.profile);
   const [userSelected, setUserSelected] = useState("");
 
+  const [loadingSearchEmail, setLoadingSearchEmail] = useState(false);
+
   const [isEmpty, setIsEmpty] = useState(true);
 
-  const [roles, setRoles] = useState([]);
+  const [visibleUserSelected, setVisibleUserSelected] = useState(false);
 
-  const [isStudent, setIsStudent] = useState(false);
-  const [isTeacher, setIsTeacher] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdminMore, setIsAdminMore] = useState(false);
+  const [visibleUsers, setVisibleUsers] = useState(false);
 
-  const [disabledStudent, setDisabledStudent] = useState(true);
-  const [disabledTeacher, setDisabledTeacher] = useState(true);
-  const [disabledAdmin, setDisabledAdmin] = useState(true);
-  const [disabledAdminMore, setDisabledAdminMore] = useState(true);
+  const authorizateSuper = profile.roles.some((e) => ["SUPER"].includes(e));
+
+  const authorizateAdminMore = profile.roles.some((e) =>
+    ["SUPER", "ADMIN+"].includes(e)
+  );
+
+  const authorizateAdmin = profile.roles.some((e) =>
+    ["SUPER", "ADMIN+", "ADMIN"].includes(e)
+  );
+
+  const [isTeacher, setIsTeacher] = useState();
+  const [isAdmin, setIsAdmin] = useState();
+
+  const [isAdminMore, setIsAdminMore] = useState();
 
   async function searchUpdated(event) {
-    console.log(event.target.value);
+    setLoadingSearchEmail(true);
+    setVisibleUsers(true);
+    setVisibleUserSelected(false);
     setSearchTerm(event.target.value);
     const term = event.target.value === "" ? undefined : event.target.value;
 
@@ -49,75 +64,91 @@ export default function Permissions() {
 
     if (usersFilteredEmail.data.length === 0) {
       setIsEmpty(true);
+      setVisibleUserSelected(false);
     } else {
       setIsEmpty(false);
     }
 
     setUsers(usersFilteredEmail.data);
+    setLoadingSearchEmail(false);
   }
+
   function handleSubmit() {}
 
   async function handleClickUser(event) {
+    setIsAdminMore(false);
+    setIsAdmin(false);
+    setIsTeacher(false);
+
+    setVisibleUserSelected(true);
     // console.log(event.tagert.value);
-    const r = [];
-    const rolesUserLogged = [];
+    console.log(profile.roles);
+
     const user = await api.get(
       `application-users/?id=${event.target.value}`,
       {}
     );
-    for (let x = 0; x < user.data.roles.length; x++) {
-      r.push(user.data.roles[0].name);
+
+    const r = [];
+    user.data.roles.forEach(function (val, index) {
+      r.push(val.name);
+    });
+
+    // console.log(user.data.roles);
+    if (r.includes("TEACHER")) {
+      setIsTeacher(true);
+    }
+    if (r.includes("ADMIN")) {
+      setIsAdmin(true);
     }
 
     if (r.includes("ADMIN+")) {
       setIsAdminMore(true);
     }
-    if (r.includes("ADMIN")) {
-      setIsAdmin(true);
-    }
-    if (r.includes("TEACHER")) {
-      setIsTeacher(true);
-    }
-    if (r.includes("STUDENT")) {
-      setIsStudent(true);
-    }
 
-    for (let x = 0; x < profile.roles.length; x++) {
-      rolesUserLogged.push(profile.roles[x]);
-    }
-    console.log(rolesUserLogged);
-    if (rolesUserLogged.includes("SUPER")) {
-      setDisabledAdminMore(false);
-      setDisabledAdmin(false);
-      setDisabledTeacher(false);
-      setDisabledStudent(false);
-    }
-    if (rolesUserLogged.includes("ADMIN+")) {
-      setDisabledAdmin(false);
-      setDisabledTeacher(false);
-      setDisabledStudent(false);
-    }
-    if (rolesUserLogged.includes("ADMIN")) {
-      setDisabledTeacher(false);
-      setDisabledStudent(false);
-    }
+    setVisibleUsers(false);
 
-    setRoles(r);
     setUserSelected(user.data);
   }
 
-  function handleClickCheckBoxAdminMore() {
-    setIsAdminMore(!isAdminMore);
-  }
-  function handleClickCheckBoxAdmin() {
-    setIsAdmin(!isAdmin);
+  async function handleSubmitRoles() {
+    console.log(profile);
+    if (authorizateAdmin) {
+      const r = [];
+      if (isAdminMore) {
+        r.push({ id: 6 });
+      }
+      if (isAdmin) {
+        r.push({ id: 1 });
+      }
+      if (isTeacher) {
+        r.push({ id: 2 });
+      }
+
+      try {
+        await api.post("user-role", {
+          userId: userSelected.id,
+          roles: r,
+        });
+        toast.success(t("Permissão salva"));
+      } catch (error) {
+        toast.success(t("Erro ao atribuir permissão"));
+      }
+    } else {
+      toast.success(t("Você não tem permissão"));
+    }
   }
 
-  function handleClickCheckBoxTeacher() {
-    setIsTeacher(!isTeacher);
-  }
-  function handleClickCheckBoxStudent() {
-    setIsStudent(!isStudent);
+  function handleChange(event) {
+    if (event.target.value === "admin+") {
+      setIsAdminMore(!isAdminMore);
+    }
+    if (event.target.value === "admin") {
+      setIsAdmin(!isAdmin);
+    }
+    if (event.target.value === "teacher") {
+      setIsTeacher(!isTeacher);
+    }
   }
 
   return (
@@ -130,11 +161,16 @@ export default function Permissions() {
             placeholder={t("Pesquisar")}
             onChange={searchUpdated}
           />
+          <IconSpinner>
+            {loadingSearchEmail && <FaSpinner size={20} />}
+          </IconSpinner>
         </InputGroup>
+      </Form>
+      {visibleUsers && (
         <Users>
           <Scroll>
             <User>
-              {isEmpty && <span>Nenhum resultado.</span>}
+              {isEmpty && <span>{t("Nenhum resultado")}</span>}
               {users.map((user) => (
                 <li
                   onClick={handleClickUser}
@@ -147,53 +183,63 @@ export default function Permissions() {
             </User>
           </Scroll>
         </Users>
-      </Form>
-      <SelectedUser>
-        <Data>
-          <p>{userSelected && userSelected.userProfile.userFirstName}</p>
-          <p>{userSelected.userName}</p>
+      )}
 
-          <Checkbox>
-            <p>
-              <span>ADMIN+</span>
-              <input
-                disabled={disabledAdminMore}
-                checked={isAdminMore}
-                type="checkbox"
-                onClick={handleClickCheckBoxAdminMore}
-              />
-            </p>
-            <p>
-              <span>ADMIN</span>
-              <input
-                disabled={disabledAdmin}
-                checked={isAdmin}
-                type="checkbox"
-                onClick={handleClickCheckBoxAdmin}
-              />
-            </p>
-            <p>
-              <span>TEACHER</span>
-              <input
-                disabled={disabledTeacher}
-                checked={isTeacher}
-                type="checkbox"
-                onClick={handleClickCheckBoxTeacher}
-              />
-            </p>
-            <p>
-              <span>STUDENT</span>
-              <input
-                disabled={disabledStudent}
-                checked={isStudent}
-                type="checkbox"
-                onClick={handleClickCheckBoxStudent}
-              />
-            </p>
-          </Checkbox>
-          <button type="button">Salvar</button>
-        </Data>
-      </SelectedUser>
+      {visibleUserSelected && (
+        <SelectedUser>
+          <ContentUser>
+            <Data>
+              <p>{userSelected && userSelected.userProfile.userFirstName}</p>
+              <p>{userSelected.userName}</p>
+            </Data>
+            <Checkbox>
+              {authorizateSuper && (
+                <p>
+                  <span>ADMIN+</span>
+                  {userSelected && (
+                    <input
+                      // disabled={disabledAdminMore}
+                      value="admin+"
+                      checked={isAdminMore}
+                      type="checkbox"
+                      onChange={handleChange}
+                    />
+                  )}
+                </p>
+              )}
+              {authorizateAdminMore && (
+                <p>
+                  <span>ADMIN</span>
+                  {userSelected && (
+                    <input
+                      value="admin"
+                      checked={isAdmin}
+                      type="checkbox"
+                      onChange={handleChange}
+                    />
+                  )}
+                </p>
+              )}
+              {authorizateAdmin && (
+                <p>
+                  <span>TEACHER</span>
+                  {userSelected && (
+                    <input
+                      value="teacher"
+                      checked={isTeacher}
+                      type="checkbox"
+                      onChange={handleChange}
+                    />
+                  )}
+                </p>
+              )}
+            </Checkbox>
+          </ContentUser>
+          <button type="button" onClick={handleSubmitRoles}>
+            {t("Salvar")}
+          </button>
+        </SelectedUser>
+      )}
     </Container>
   );
 }
