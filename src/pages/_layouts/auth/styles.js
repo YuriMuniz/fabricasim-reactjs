@@ -66,7 +66,7 @@ export const Content = styled.div`
     button {
       margin: 5px 0 0;
       height: 44px;
-      background: #6095b2;
+      background: ${(props) => (props.disabled ? "#6095b2" : "#6095b2")};
       font-weight: bold;
       color: rgba(255, 255, 255, 0.7);
       border: 0;
@@ -75,7 +75,8 @@ export const Content = styled.div`
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, "#91CBDA")};
+        background: ${(props) =>
+          props.disabled ? "#6095b2" : darken(0.03, "#6095b2")};
       }
     }
 

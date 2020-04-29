@@ -28,7 +28,7 @@ export const InputGroup = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: 600px;
+  width: 315px;
   margin: 50px auto;
   display: flex;
   flex-direction: column;
@@ -39,7 +39,7 @@ export const Container = styled.div`
 
     input {
       background: rgba(0, 0, 0, 0.1);
-      width: 500px;
+      width: 315px;
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -65,7 +65,7 @@ export const Scroll = styled(PerfectScrollbar)`
 `;
 
 export const Users = styled.div`
-  width: 500px;
+  width: 315px;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -106,13 +106,12 @@ export const User = styled.ul`
 
 export const ContentUser = styled.div`
   display: flex;
-  direction: row;
-  justify-content: space-around;
+  flex-direction: column;
 `;
 
 export const SelectedUser = styled.div`
   margin-top: 30px;
-  max-width: 500px;
+  max-width: 315px;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -144,10 +143,12 @@ export const Data = styled.div`
 `;
 
 export const Checkbox = styled.div`
+  padding: 10px;
   color: rgba(255, 255, 255, 0.7);
+
   p {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 
     & + p {
       margin-top: 6px;

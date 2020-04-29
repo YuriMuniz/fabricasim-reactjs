@@ -11,10 +11,9 @@ const rotate = keyframes`
 
 export const Container = styled.div`
   svg {
+    position: absolute;
     animation: ${rotate} 2s linear infinite;
-    align-items: center;
-    margin-right: -30px;
-
+    margin-top: -10px;
     color: rgba(255, 255, 255, 0.7);
   }
 `;

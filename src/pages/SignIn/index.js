@@ -48,10 +48,12 @@ export default function SignIn() {
         <Input name="email" type="email" placeholder={t("Seu e-mail")} />
         <Input name="password" type="password" placeholder={t("Sua senha")} />
 
-        <button type="submit">
-          {loading ? `${t("Carregando")}...` : t("Acessar")}
-          {loading && <FaSpinner size={20} />}
-        </button>
+        {!loading && <button type="submit">{t("Acessar")}</button>}
+        {loading && (
+          <button type="submit" disabled="disabled">
+            <FaSpinner size={20} />
+          </button>
+        )}
 
         <Link to="/register">{t("Criar conta")}</Link>
       </Form>
