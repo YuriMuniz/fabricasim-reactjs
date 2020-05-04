@@ -35,6 +35,8 @@ module.exports = {
     "no-console": "off",
     "react/jsx-props-no-spreading": "off",
     "no-plusplus": "off",
+    "no-nested-ternary": "off",
+    "radix" : "off",
   },
   settings: {
     "import/resolver": {
