@@ -44,6 +44,11 @@ export const Content = styled.div`
       a {
         display: none;
       }
+
+      nav {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 
