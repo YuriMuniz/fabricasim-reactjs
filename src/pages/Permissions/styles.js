@@ -45,7 +45,7 @@ export const Container = styled.div`
     justify-content: space-between;
     input {
       background: rgba(0, 0, 0, 0.1);
-      width: 80%;
+      width: 100%;
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -55,24 +55,6 @@ export const Container = styled.div`
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
-      }
-    }
-    button {
-      padding: 10px;
-      width: 15%;
-      height: 44px;
-
-      background: #6095b2;
-      font-weight: bold;
-      color: rgba(255, 255, 255, 0.7);
-      border: 0;
-      border-radius: 4px;
-
-      font-size: 14px;
-      transition: background 0.2s;
-
-      &:hover {
-        background: ${darken(0.03, "#6095b2")};
       }
     }
 

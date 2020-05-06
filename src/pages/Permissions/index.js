@@ -199,7 +199,6 @@ export default function Permissions() {
           <IconSpinner>
             {loadingSearchEmail && <FaSpinner size={20} />}
           </IconSpinner>
-          <button type="button">{t("Pesquisar")}</button>
         </InputGroup>
       </Form>
       {visibleUsers && (
