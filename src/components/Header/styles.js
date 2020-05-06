@@ -21,6 +21,7 @@ export const Content = styled.div`
       margin-right: 20px;
       padding-right: 20px;
       border-right: 1px solid #eee;
+      max-width: 100%;
     }
 
     a {
@@ -40,6 +41,7 @@ export const Content = styled.div`
     @media (max-width: 768px) {
       img {
         border-right: 0px;
+        max-width: 100%;
       }
       a {
         display: none;
@@ -56,13 +58,54 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
 
+    button {
+      background: none;
+      border: 0;
+    }
+
     #menu {
       display: none;
     }
     @media (max-width: 768px) {
+      justify-content: space-between;
+      button {
+        margin-right: -60px;
+      }
       #menu {
         display: block;
-        margin-left: 30px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    max-height: 120px;
+  }
+`;
+
+export const MenuMobile = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    background: #243943;
+    width: 100%;
+    height: auto;
+    margin-top: 5px;
+    padding: 15px 0px 10px 0;
+
+    border-radius: 4px 4px 0px 0px;
+    a {
+      font-weight: normal;
+      font-size: 12px;
+      color: #fff;
+      margin-right: 10px;
+      padding-left: 20px;
+
+      & + a {
+        border-left: 0.5px solid #eee;
+      }
+
+      &:hover {
+        opacity: 0.9;
       }
     }
   }

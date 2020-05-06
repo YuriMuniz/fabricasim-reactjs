@@ -92,4 +92,13 @@ export const Content = styled.div`
       }
     }
   }
+
+  @media (max-width: 330px) {
+    height: 100%;
+    background: #243943;
+
+    form {
+      background: #243943;
+    }
+  }
 `;

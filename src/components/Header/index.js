@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useSelector } from "react-redux";
@@ -8,11 +8,16 @@ import { MdAccountCircle, MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/logo-full.png";
-import { Container, Content, Profile } from "./styles";
+import { Container, Content, Profile, MenuMobile } from "./styles";
 
 export default function Header() {
   const profile = useSelector((state) => state.user.profile);
   const { t } = useTranslation();
+  const [visibleMenuMobile, setVisibleMenuMobile] = useState(false);
+
+  function handleVisibleMenuMobile() {
+    setVisibleMenuMobile(!visibleMenuMobile);
+  }
 
   const authorizateAccessRequest =
     profile.roles.some((e) => ["STUDENT"].includes(e)) &&
@@ -30,17 +35,19 @@ export default function Header() {
         <nav>
           <img src={logo} alt="Fábrica Sim" />
           {authorizatePermissions && (
-            <Link to="/permissions">{t("Permissões")}</Link>
+            <Link to="/permissions">{t("PERMISSÕES")}</Link>
           )}
           {authorizateCreateGroups && (
-            <Link to="/create-groups">{t("Criar grupo")}</Link>
+            <Link to="/create-groups">{t("CRIAR GRUPO")}</Link>
           )}
           {authorizateAccessRequest && (
-            <Link to="/access-request">{t("Solicitar acesso")}</Link>
+            <Link to="/access-request">{t("SOLICITAR ACESSO")}</Link>
           )}
         </nav>
         <aside>
-          <MdMenu id="menu" size={30} />
+          <button type="button" onClick={handleVisibleMenuMobile}>
+            <MdMenu id="menu" size={30} />
+          </button>
           <Profile>
             <div>
               <strong>{profile.name}</strong>
@@ -50,6 +57,20 @@ export default function Header() {
           </Profile>
         </aside>
       </Content>
+      {visibleMenuMobile && (
+        <MenuMobile>
+          {authorizatePermissions && (
+            <Link to="/permissions">{t("Permissões")}</Link>
+          )}
+          {authorizateCreateGroups && (
+            <Link to="/create-groups">{t("Criar grupo")}</Link>
+          )}
+          {authorizateAccessRequest && (
+            <Link to="/access-request">{t("Solicitar acesso")}</Link>
+          )}
+          <Link to="/profile">{t("Meu perfil")}</Link>
+        </MenuMobile>
+      )}
     </Container>
   );
 }

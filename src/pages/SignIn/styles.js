@@ -16,6 +16,10 @@ export const Container = styled.div`
     margin-top: -10px;
     color: rgba(255, 255, 255, 0.7);
   }
+
+  @media (max-width: 330px) {
+    margin-top: 80px;
+  }
 `;
 
 export const Images = styled.div`

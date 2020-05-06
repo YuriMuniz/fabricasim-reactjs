@@ -23,7 +23,7 @@ export const IconSpinner = styled.div`
 `;
 
 export const InputGroup = styled.div`
-  width: 600px;
+  width: 100%;
   display: flex;
 `;
 
@@ -33,13 +33,16 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 400px) {
+    margin: 10px auto;
+  }
 
   form {
     margin-top: 30px;
 
     input {
       background: rgba(0, 0, 0, 0.1);
-      width: 600px;
+      width: 100%;
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -65,7 +68,7 @@ export const Scroll = styled(PerfectScrollbar)`
 `;
 
 export const Users = styled.div`
-  max-width: 600px;
+  width: 100%;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -111,7 +114,7 @@ export const ContentUser = styled.div`
 
 export const SelectedUser = styled.div`
   margin-top: 30px;
-  max-width: 600px;
+  width: 100%;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;

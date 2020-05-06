@@ -100,9 +100,10 @@ export const ButtonGroup = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-right: 20px;
+    margin-right: 15px;
 
     #button-register-user {
+      margin-left: -40px;
       height: 40px;
       width: 40px;
       svg {
@@ -111,6 +112,29 @@ export const ButtonGroup = styled.div`
       }
     }
     #button-register-group {
+      height: 40px;
+      width: 40px;
+
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+
+  @media (max-width: 330px) {
+    margin-right: 15px;
+    #button-register-user {
+      margin-right: 0px;
+      height: 40px;
+      width: 40px;
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+    #button-register-group {
+      margin-left: -40px;
       height: 40px;
       width: 40px;
       svg {
@@ -124,6 +148,12 @@ export const ButtonGroup = styled.div`
 export const InputGroup = styled.div`
   width: 70%;
   margin-right: 20px;
+
+  @media (max-width: 330px) {
+    input {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const Table = styled.div`
@@ -446,10 +476,11 @@ export const NotFoundUser = styled.div`
     width: 10%;
     color: #fff;
   }
-  h5 {
+  span {
     width: 70%;
     color: #fff;
     font-weight: normal;
+    font-size: 12px;
   }
 
   div {
@@ -464,11 +495,41 @@ export const NotFoundUser = styled.div`
       border: 0;
       border-radius: 4px;
 
-      font-size: 14px;
+      font-size: 12px;
       transition: background 0.2s;
 
       &:hover {
         background: ${darken(0.03, "#6095b2")};
+      }
+    }
+  }
+  @media (max-width: 760px) {
+    span {
+      width: 60%;
+
+      margin-left: 5px;
+    }
+    div {
+      width: 30%;
+      display: flex;
+      button {
+      }
+    }
+  }
+
+  @media (max-width: 330px) {
+    span {
+      width: 60%;
+      font-size: 10px;
+      margin-left: 5px;
+    }
+    div {
+      width: 30%;
+      display: flex;
+      button {
+        font-size: 10px;
+        width: 30px;
+        height: 25px;
       }
     }
   }
@@ -508,7 +569,7 @@ export const CurrentMembers = styled.div`
         border: 0;
         border-radius: 4px;
         margin-right: 10px;
-        font-size: 14px;
+        font-size: 12px;
         transition: background 0.2s;
 
         svg {
@@ -525,6 +586,17 @@ export const CurrentMembers = styled.div`
 
   h4 {
     color: #fff;
+  }
+
+  @media (max-width: 330px) {
+    h1 {
+      font-size: 16px;
+    }
+    li {
+      span {
+        font-size: 12px;
+      }
+    }
   }
 `;
 export const AddCourses = styled.div`
@@ -561,14 +633,14 @@ export const AddMembers = styled.div`
       margin: 0 0 10px;
 
       margin-top: 15px;
-      width: 90%;
+      width: 80%;
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
       }
     }
     button {
-      width: 8%;
+      width: 15%;
       height: 44px;
       margin: 15px 0 0 10px;
       background: #6095b2;

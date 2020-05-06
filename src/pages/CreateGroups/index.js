@@ -59,8 +59,9 @@ import {
 export default function CreateGroups() {
   const useStyles = makeStyles((theme) => ({
     formControl: {
-      minWidth: 500,
-      maxWidth: 500,
+      minWidth: 310,
+      maxWidth: 310,
+      fontSize: 12,
       "&:before": {
         // normal
         borderBottom: `1px solid #eee`,
@@ -79,6 +80,7 @@ export default function CreateGroups() {
     },
     select: {
       color: "#fff",
+      fontSize: 12,
     },
   }));
 
@@ -145,7 +147,8 @@ export default function CreateGroups() {
     PaperProps: {
       style: {
         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 315,
+        width: 310,
+        fontSize: 12,
       },
     },
   };
@@ -675,7 +678,7 @@ export default function CreateGroups() {
             {visibleNotFoundUser && (
               <NotFoundUser>
                 <MdWarning size={30} />
-                <h5>{t("Esse usuário não existe")}</h5>
+                <span>{t("Esse usuário não existe")}</span>
                 <div>
                   <button type="button" onClick={handleClickRegisterUser}>
                     {t("Sim")}
