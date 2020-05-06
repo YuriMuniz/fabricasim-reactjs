@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
+import { darken } from "polished";
 
 const rotate = keyframes`
     from {
@@ -39,10 +40,12 @@ export const Container = styled.div`
 
   form {
     margin-top: 30px;
-
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     input {
       background: rgba(0, 0, 0, 0.1);
-      width: 100%;
+      width: 80%;
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -52,6 +55,24 @@ export const Container = styled.div`
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
+      }
+    }
+    button {
+      padding: 10px;
+      width: 15%;
+      height: 44px;
+
+      background: #6095b2;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.7);
+      border: 0;
+      border-radius: 4px;
+
+      font-size: 14px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: ${darken(0.03, "#6095b2")};
       }
     }
 

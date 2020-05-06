@@ -51,7 +51,11 @@ export default function Permissions() {
 
   const [isAdminMore, setIsAdminMore] = useState();
 
+  const [index, setIndex] = useState(0);
+
   async function searchUpdated(event) {
+    // setI(event.target.value.length);
+    console.log(event.target);
     setLoadingSearchEmail(true);
     setVisibleUsers(true);
     setVisibleUserSelected(false);
@@ -71,6 +75,37 @@ export default function Permissions() {
 
     setUsers(usersFilteredEmail.data);
     setLoadingSearchEmail(false);
+  }
+
+  async function triggerChange(event) {
+    setLoadingSearchEmail(true);
+    setVisibleUsers(true);
+    setVisibleUserSelected(false);
+    setSearchTerm(event.target.value);
+
+    const term = event.target.value === "" ? undefined : event.target.value;
+
+    const usersFilteredEmail = await api.post("user-filter", {
+      email: term,
+      index: event.target.value.length,
+    });
+    console.log(index);
+    if (usersFilteredEmail.data.usersFilter.length === 0) {
+      setIsEmpty(true);
+      setVisibleUserSelected(false);
+    } else {
+      setIsEmpty(false);
+    }
+
+    setUsers(usersFilteredEmail.data);
+    setLoadingSearchEmail(false);
+  }
+
+  async function keyUp(event) {
+    // console.log(event.target.value.length);
+
+    setIndex(event.target.value.length);
+    triggerChange(event);
   }
 
   function handleSubmit() {}
@@ -158,12 +193,13 @@ export default function Permissions() {
           <MdSearch size="30" color="#fff" />
           <Input
             name="term"
-            placeholder={t("Pesquisar")}
-            onChange={searchUpdated}
+            placeholder={t("Pesquisar pelo e-mail")}
+            onKeyUp={keyUp}
           />
           <IconSpinner>
             {loadingSearchEmail && <FaSpinner size={20} />}
           </IconSpinner>
+          <button type="button">{t("Pesquisar")}</button>
         </InputGroup>
       </Form>
       {visibleUsers && (
@@ -171,15 +207,19 @@ export default function Permissions() {
           <Scroll>
             <User>
               {isEmpty && <span>{t("Nenhum resultado")}</span>}
-              {users.map((user) => (
-                <li
-                  onClick={handleClickUser}
-                  key={user.id}
-                  value={user.userProfile.id}
-                >
-                  {user.userName}
-                </li>
-              ))}
+              {users.index === index && (
+                <div>
+                  {users.usersFilter.map((user) => (
+                    <li
+                      onClick={handleClickUser}
+                      key={user.id}
+                      value={user.userProfile.id}
+                    >
+                      {user.userName}
+                    </li>
+                  ))}
+                </div>
+              )}
             </User>
           </Scroll>
         </Users>
