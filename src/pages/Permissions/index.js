@@ -139,11 +139,12 @@ export default function Permissions() {
   function handleSubmit() {}
 
   async function handleClickUser(event) {
+    setVisibleUsers(false);
+    setVisibleUserSelected(true);
     setIsAdminMore(false);
     setIsAdmin(false);
     setIsTeacher(false);
 
-    setVisibleUserSelected(true);
     // console.log(event.tagert.value);
     console.log(profile.roles);
 
@@ -168,8 +169,6 @@ export default function Permissions() {
     if (r.includes("ADMIN+")) {
       setIsAdminMore(true);
     }
-
-    setVisibleUsers(false);
 
     setUserSelected(user.data);
   }
