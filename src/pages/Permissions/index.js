@@ -239,7 +239,7 @@ export default function Permissions() {
             <Input
               name="term"
               placeholder={t("Pesquisar pelo e-mail")}
-              onKeyUp={keyUp}
+              onChange={keyUp}
             />
             <IconSpinner>
               {loadingSearchEmail && <FaSpinner size={20} />}
