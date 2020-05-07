@@ -110,30 +110,21 @@ export default function Permissions() {
     setSearchTerm(event.target.value);
 
     const term = event.target.value === "" ? undefined : event.target.value;
-    const users = [];
-    setTimeout(async () => {
-      const usersFilteredEmail = await api.post("user-filter", {
-        email: term,
-      });
-      if (usersFilteredEmail.data.usersFilter.length === 0) {
-        setIsEmpty(true);
-        setVisibleUserSelected(false);
-      } else {
-        setIsEmpty(false);
-      }
-      setUsers(usersFilteredEmail.data.usersFilter);
-      for (let x = 0; x < usersFilteredEmail.data.usersFilter.length; x++) {
-        console.log(usersFilteredEmail.data.usersFilter[x].id);
-      }
 
-      setLoadingSearchEmail(false);
+    const usersFilteredEmail = await api.post("user-filter", {
+      email: term,
+      index: event.target.value.length,
     });
+    console.log(index);
+    if (usersFilteredEmail.data.usersFilter.length === 0) {
+      setIsEmpty(true);
+      setVisibleUserSelected(false);
+    } else {
+      setIsEmpty(false);
+    }
 
-    // const usersFilteredEmail = await api.post("user-filter", {
-    //   email: term,
-    //   index: event.target.value.length,
-    // });
-    // console.log(index);
+    setUsers(usersFilteredEmail.data);
+    setLoadingSearchEmail(false);
   }
 
   function handleSubmit() {}
@@ -234,9 +225,9 @@ export default function Permissions() {
           <Scroll>
             <User>
               {isEmpty && <span>{t("Nenhum resultado")}</span>}
-              {users.length > 0 && (
+              {users.index === index && (
                 <div>
-                  {users.map((user) => (
+                  {users.usersFilter.map((user) => (
                     <li
                       onClick={handleClickUser}
                       key={user.id}
