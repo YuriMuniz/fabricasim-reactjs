@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 import { Route, Redirect } from "react-router-dom";
-
+import history from "../services/history";
 import AuthLayout from "../pages/_layouts/auth";
 import DefaultLayout from "../pages/_layouts/default";
 
@@ -19,7 +19,7 @@ export default function RouteWrapper({
   const { signed } = store.getState().auth;
 
   if (!signed && isPrivate) {
-    return <Redirect to="/" />;
+    return history.push("/");
   }
 
   if (signed && !isPrivate) {
