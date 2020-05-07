@@ -45,87 +45,96 @@ export default function Permissions() {
   const authorizateAdmin = profile.roles.some((e) =>
     ["SUPER", "ADMIN+", "ADMIN"].includes(e)
   );
-
+  const [loadingUsers, setLoadingUsers] = useState(false);
   const [isTeacher, setIsTeacher] = useState();
   const [isAdmin, setIsAdmin] = useState();
 
   const [isAdminMore, setIsAdminMore] = useState();
-
+  const [usersLoad, setUsersLoad] = useState(loadUsers);
   const [index, setIndex] = useState();
 
-  async function searchUpdated(event) {
-    // setI(event.target.value.length);
-    console.log(event.target);
-    setLoadingSearchEmail(true);
-    setVisibleUsers(true);
-    setVisibleUserSelected(false);
-    setSearchTerm(event.target.value);
-    const term = event.target.value === "" ? undefined : event.target.value;
-
+  async function loadUsers() {
+    setLoadingUsers(true);
     const usersFilteredEmail = await api.post("user-filter", {
-      email: term,
+      email: "",
     });
-
-    if (usersFilteredEmail.data.length === 0) {
-      setIsEmpty(true);
-      setVisibleUserSelected(false);
-    } else {
-      setIsEmpty(false);
-    }
-
-    setUsers(usersFilteredEmail.data);
-    setLoadingSearchEmail(false);
-  }
-
-  async function triggerChange(event) {
-    setIndex(event.target.value.length);
-    setLoadingSearchEmail(true);
-    setVisibleUsers(true);
-    setVisibleUserSelected(false);
-    setSearchTerm(event.target.value);
-
-    const term = event.target.value === "" ? undefined : event.target.value;
-
-    const usersFilteredEmail = await api.post("user-filter", {
-      email: term,
-      index: event.target.value.length,
-    });
-    console.log(index);
-    if (usersFilteredEmail.data.usersFilter.length === 0) {
-      setIsEmpty(true);
-      setVisibleUserSelected(false);
-    } else {
-      setIsEmpty(false);
-    }
-
-    setUsers(usersFilteredEmail.data);
-    setLoadingSearchEmail(false);
+    setUsersLoad(usersFilteredEmail);
+    setLoadingUsers(false);
+    console.log(usersFilteredEmail);
   }
 
   async function keyUp(event) {
-    setIndex(event.target.value.length);
+    // setIndex(event.target.value.length);
+
     setLoadingSearchEmail(true);
     setVisibleUsers(true);
     setVisibleUserSelected(false);
     setSearchTerm(event.target.value);
 
     const term = event.target.value === "" ? undefined : event.target.value;
-
-    const usersFilteredEmail = await api.post("user-filter", {
-      email: term,
-      index: event.target.value.length,
+    // console.log(usersLoad.data);
+    const filter = usersLoad.data.filter((user) => {
+      return user.userName.includes(term);
     });
-    console.log(index);
-    if (usersFilteredEmail.data.usersFilter.length === 0) {
+    if (filter.length === 0) {
       setIsEmpty(true);
       setVisibleUserSelected(false);
     } else {
       setIsEmpty(false);
     }
-
-    setUsers(usersFilteredEmail.data);
     setLoadingSearchEmail(false);
+
+    setUsers(filter);
   }
+
+  // async function searchUpdated(event) {
+  //   // setI(event.target.value.length);
+  //   console.log(event.target);
+  //   setLoadingSearchEmail(true);
+  //   setVisibleUsers(true);
+  //   setVisibleUserSelected(false);
+  //   setSearchTerm(event.target.value);
+  //   const term = event.target.value === "" ? undefined : event.target.value;
+
+  //   const usersFilteredEmail = await api.post("user-filter", {
+  //     email: term,
+  //   });
+
+  //   if (usersFilteredEmail.data.length === 0) {
+  //     setIsEmpty(true);
+  //     setVisibleUserSelected(false);
+  //   } else {
+  //     setIsEmpty(false);
+  //   }
+
+  //   setUsers(usersFilteredEmail.data);
+  //   setLoadingSearchEmail(false);
+  // }
+
+  // async function triggerChange(event) {
+  //   setIndex(event.target.value.length);
+  //   setLoadingSearchEmail(true);
+  //   setVisibleUsers(true);
+  //   setVisibleUserSelected(false);
+  //   setSearchTerm(event.target.value);
+
+  //   const term = event.target.value === "" ? undefined : event.target.value;
+
+  //   const usersFilteredEmail = await api.post("user-filter", {
+  //     email: term,
+  //     index: event.target.value.length,
+  //   });
+  //   console.log(index);
+  //   if (usersFilteredEmail.data.usersFilter.length === 0) {
+  //     setIsEmpty(true);
+  //     setVisibleUserSelected(false);
+  //   } else {
+  //     setIsEmpty(false);
+  //   }
+
+  //   setUsers(usersFilteredEmail.data);
+  //   setLoadingSearchEmail(false);
+  // }
 
   function handleSubmit() {}
 
@@ -208,17 +217,35 @@ export default function Permissions() {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <InputGroup>
-          <MdSearch size="30" color="#fff" />
-          <Input
-            name="term"
-            placeholder={t("Pesquisar pelo e-mail")}
-            onKeyUp={keyUp}
-          />
-          <IconSpinner>
-            {loadingSearchEmail && <FaSpinner size={20} />}
-          </IconSpinner>
-        </InputGroup>
+        {loadingUsers && (
+          <InputGroup>
+            <MdSearch size="30" color="#fff" />
+
+            <Input
+              disabled
+              name="term"
+              placeholder={t("Pesquisar pelo e-mail")}
+              onKeyUp={keyUp}
+            />
+            <IconSpinner>
+              <FaSpinner size={20} />
+            </IconSpinner>
+          </InputGroup>
+        )}
+        {!loadingUsers && (
+          <InputGroup>
+            <MdSearch size="30" color="#fff" />
+
+            <Input
+              name="term"
+              placeholder={t("Pesquisar pelo e-mail")}
+              onKeyUp={keyUp}
+            />
+            <IconSpinner>
+              {loadingSearchEmail && <FaSpinner size={20} />}
+            </IconSpinner>
+          </InputGroup>
+        )}
       </Form>
       {visibleUsers && (
         <Users>
@@ -227,7 +254,7 @@ export default function Permissions() {
               {isEmpty && <span>{t("Nenhum resultado")}</span>}
               {users.index === index && (
                 <div>
-                  {users.usersFilter.map((user) => (
+                  {users.map((user) => (
                     <li
                       onClick={handleClickUser}
                       key={user.id}
