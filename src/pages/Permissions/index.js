@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Form, Input } from "@rocketseat/unform";
 import { MdSearch } from "react-icons/md";
 import { toast } from "react-toastify";
-
 import { FaSpinner } from "react-icons/fa";
+
 import api from "../../services/api";
 
 import {
