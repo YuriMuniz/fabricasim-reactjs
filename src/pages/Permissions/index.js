@@ -76,6 +76,7 @@ export default function Permissions() {
     const filter = usersLoad.data.filter((user) => {
       return user.userName.includes(term);
     });
+    console.log(filter);
     if (filter.length === 0) {
       setIsEmpty(true);
       setVisibleUserSelected(false);
