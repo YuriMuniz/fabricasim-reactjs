@@ -74,7 +74,7 @@ export default function Permissions() {
     const term = event.target.value === "" ? undefined : event.target.value;
     // console.log(usersLoad.data);
     const filter = usersLoad.data.filter((user) => {
-      return user.userName.includes(term);
+      return user.userName.toLowerCase().includes(term.toLowerCase());
     });
     console.log(filter);
     if (filter.length === 0) {
