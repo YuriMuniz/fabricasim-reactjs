@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { darken } from "polished";
 
 const rotate = keyframes`
     from {

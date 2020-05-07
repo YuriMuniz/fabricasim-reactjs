@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Form, Input } from "@rocketseat/unform";
@@ -51,7 +51,7 @@ export default function Permissions() {
 
   const [isAdminMore, setIsAdminMore] = useState();
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState();
 
   async function searchUpdated(event) {
     // setI(event.target.value.length);
@@ -78,6 +78,7 @@ export default function Permissions() {
   }
 
   async function triggerChange(event) {
+    setIndex(event.target.value.length);
     setLoadingSearchEmail(true);
     setVisibleUsers(true);
     setVisibleUserSelected(false);
@@ -102,10 +103,37 @@ export default function Permissions() {
   }
 
   async function keyUp(event) {
-    // console.log(event.target.value.length);
-
     setIndex(event.target.value.length);
-    triggerChange(event);
+    setLoadingSearchEmail(true);
+    setVisibleUsers(true);
+    setVisibleUserSelected(false);
+    setSearchTerm(event.target.value);
+
+    const term = event.target.value === "" ? undefined : event.target.value;
+    const users = [];
+    setTimeout(async () => {
+      const usersFilteredEmail = await api.post("user-filter", {
+        email: term,
+      });
+      if (usersFilteredEmail.data.usersFilter.length === 0) {
+        setIsEmpty(true);
+        setVisibleUserSelected(false);
+      } else {
+        setIsEmpty(false);
+      }
+      setUsers(usersFilteredEmail.data.usersFilter);
+      for (let x = 0; x < usersFilteredEmail.data.usersFilter.length; x++) {
+        console.log(usersFilteredEmail.data.usersFilter[x].id);
+      }
+
+      setLoadingSearchEmail(false);
+    });
+
+    // const usersFilteredEmail = await api.post("user-filter", {
+    //   email: term,
+    //   index: event.target.value.length,
+    // });
+    // console.log(index);
   }
 
   function handleSubmit() {}
@@ -206,9 +234,9 @@ export default function Permissions() {
           <Scroll>
             <User>
               {isEmpty && <span>{t("Nenhum resultado")}</span>}
-              {users.index === index && (
+              {users.length > 0 && (
                 <div>
-                  {users.usersFilter.map((user) => (
+                  {users.map((user) => (
                     <li
                       onClick={handleClickUser}
                       key={user.id}
