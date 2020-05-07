@@ -19,7 +19,7 @@ export default function RouteWrapper({
   const { signed } = store.getState().auth;
 
   if (!signed && isPrivate) {
-    return history.push("/");
+    history.push("/");
   }
 
   if (signed && !isPrivate) {
