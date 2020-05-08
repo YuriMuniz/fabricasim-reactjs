@@ -51,6 +51,8 @@ export default function Permissions() {
 
   const [isAdminMore, setIsAdminMore] = useState();
   const [usersLoad, setUsersLoad] = useState(loadUsers);
+  const [loadingUserSelected, setLoadingUserSelected] = useState(false);
+  const [loadingSaveRole, setLoadingSaveRole] = useState(false);
   const [index, setIndex] = useState();
 
   async function loadUsers() {
@@ -73,6 +75,12 @@ export default function Permissions() {
 
     const term = event.target.value === "" ? undefined : event.target.value;
     // console.log(usersLoad.data);
+    if (term === undefined) {
+      setVisibleUsers(false);
+      setVisibleUserSelected(false);
+      setLoadingSearchEmail(false);
+      return;
+    }
     const filter = usersLoad.data.filter((user) => {
       return user.userName.toLowerCase().includes(term.toLowerCase());
     });
@@ -140,6 +148,7 @@ export default function Permissions() {
   function handleSubmit() {}
 
   async function handleClickUser(event) {
+    setLoadingUserSelected(true);
     setVisibleUsers(false);
     setVisibleUserSelected(true);
     setIsAdminMore(false);
@@ -172,9 +181,11 @@ export default function Permissions() {
     }
 
     setUserSelected(user.data);
+    setLoadingUserSelected(false);
   }
 
   async function handleSubmitRoles() {
+    setLoadingSaveRole(true);
     console.log(profile);
     if (authorizateAdmin) {
       const r = [];
@@ -196,10 +207,12 @@ export default function Permissions() {
         toast.success(t("Permissão salva"));
       } catch (error) {
         toast.success(t("Erro ao atribuir permissão"));
+        setLoadingSaveRole(true);
       }
     } else {
       toast.success(t("Você não tem permissão"));
     }
+    setLoadingSaveRole(false);
   }
 
   function handleChange(event) {
@@ -273,56 +286,67 @@ export default function Permissions() {
       {visibleUserSelected && (
         <SelectedUser>
           <ContentUser>
+            {loadingUserSelected && <FaSpinner size={20} />}
+
             <Data>
               <p>{userSelected && userSelected.userProfile.userFirstName}</p>
               <p>{userSelected.userName}</p>
             </Data>
-            <Checkbox>
-              {authorizateSuper && (
-                <p>
-                  <span>ADMIN+</span>
-                  {userSelected && (
-                    <input
-                      // disabled={disabledAdminMore}
-                      value="admin+"
-                      checked={isAdminMore}
-                      type="checkbox"
-                      onChange={handleChange}
-                    />
-                  )}
-                </p>
-              )}
-              {authorizateAdminMore && (
-                <p>
-                  <span>ADMIN</span>
-                  {userSelected && (
-                    <input
-                      value="admin"
-                      checked={isAdmin}
-                      type="checkbox"
-                      onChange={handleChange}
-                    />
-                  )}
-                </p>
-              )}
-              {authorizateAdmin && (
-                <p>
-                  <span>TEACHER</span>
-                  {userSelected && (
-                    <input
-                      value="teacher"
-                      checked={isTeacher}
-                      type="checkbox"
-                      onChange={handleChange}
-                    />
-                  )}
-                </p>
-              )}
-            </Checkbox>
+            {!loadingUserSelected && (
+              <Checkbox>
+                {authorizateSuper && (
+                  <p>
+                    <span>ADMIN+</span>
+                    {userSelected && (
+                      <input
+                        // disabled={disabledAdminMore}
+                        value="admin+"
+                        checked={isAdminMore}
+                        type="checkbox"
+                        onChange={handleChange}
+                      />
+                    )}
+                  </p>
+                )}
+                {authorizateAdminMore && (
+                  <p>
+                    <span>ADMIN</span>
+                    {userSelected && (
+                      <input
+                        value="admin"
+                        checked={isAdmin}
+                        type="checkbox"
+                        onChange={handleChange}
+                      />
+                    )}
+                  </p>
+                )}
+                {authorizateAdmin && (
+                  <p>
+                    <span>TEACHER</span>
+                    {userSelected && (
+                      <input
+                        value="teacher"
+                        checked={isTeacher}
+                        type="checkbox"
+                        onChange={handleChange}
+                      />
+                    )}
+                  </p>
+                )}
+              </Checkbox>
+            )}
           </ContentUser>
-          <button type="button" onClick={handleSubmitRoles}>
-            {t("Salvar")}
-          </button>
+          {loadingSaveRole && (
+            <button type="button" disabled onClick={handleSubmitRoles}>
+              {t("Salvar")} <FaSpinner size={20} color="#FFF" />
+            </button>
+          )}
+          {!loadingSaveRole && (
+            <button type="button" onClick={handleSubmitRoles}>
+              {t("Salvar")}
+            </button>
+          )}
         </SelectedUser>
       )}
     </Container>

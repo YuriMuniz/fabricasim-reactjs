@@ -23,7 +23,7 @@ export default function Header() {
     profile.roles.some((e) => ["STUDENT"].includes(e)) &&
     profile.roles.length === 1;
   const authorizateCreateGroups = profile.roles.some((e) =>
-    ["SUPER", "ADMIN+", "ADMIN", "TEACHER"].includes(e)
+    ["SUPER", "ADMIN+", "ADMIN"].includes(e)
   );
   const authorizatePermissions = profile.roles.some((e) =>
     ["SUPER", "ADMIN+", "ADMIN"].includes(e)
@@ -37,17 +37,13 @@ export default function Header() {
           {authorizatePermissions && (
             <Link to="/permissions">{t("PERMISSÕES")}</Link>
           )}
-          {authorizateCreateGroups && (
-            <Link to="/create-groups">{t("CRIAR GRUPO")}</Link>
-          )}
-          {authorizateAccessRequest && (
-            <Link to="/access-request">{t("SOLICITAR ACESSO")}</Link>
-          )}
+          {authorizateCreateGroups && <Link to="/groups">{t("GRUPOS")}</Link>}
         </nav>
         <aside>
           <button type="button" onClick={handleVisibleMenuMobile}>
             <MdMenu id="menu" size={30} />
           </button>
+
           <Profile>
             <div>
               <strong>{profile.name}</strong>
@@ -62,13 +58,10 @@ export default function Header() {
           {authorizatePermissions && (
             <Link to="/permissions">{t("Permissões")}</Link>
           )}
-          {authorizateCreateGroups && (
-            <Link to="/create-groups">{t("Criar grupo")}</Link>
+          {authorizateCreateGroups && <Link to="/groups">{t("Grupos")}</Link>}
+          {!authorizateAccessRequest && (
+            <Link to="/profile">{t("Meu perfil")}</Link>
           )}
-          {authorizateAccessRequest && (
-            <Link to="/access-request">{t("Solicitar acesso")}</Link>
-          )}
-          <Link to="/profile">{t("Meu perfil")}</Link>
         </MenuMobile>
       )}
     </Container>

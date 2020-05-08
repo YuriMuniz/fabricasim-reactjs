@@ -4,12 +4,6 @@ import { darken } from "polished";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
-export const Container = styled.div`
-  max-width: 600px;
-  margin: 20px auto;
-  background: #243943;
-`;
-
 const rotate = keyframes`
     from {
         transform: rotate(0deg);
@@ -19,28 +13,105 @@ const rotate = keyframes`
     }
 `;
 
-export const Header = styled.div`
+export const Container = styled.div`
+  max-width: 600px;
+  margin: 20px auto;
+  background: #243943;
+`;
+
+export const SpinnerTable = styled.div`
   display: flex;
-  justify-content: space-between;
-
-  input {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.1);
-    border: 0;
-    border-radius: 4px;
-    height: 44px;
-    padding: 0px 40px;
+  justify-content: center;
+  svg {
+    animation: ${rotate} 2s linear infinite;
+    margin-left: 5px;
     color: #fff;
-    margin: 5px 0 10px 5px;
+    margin-top: 50px;
+  }
+`;
 
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
+export const Checkbox = styled.div`
+  color: rgba(255, 255, 255, 0.7);
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & + p {
+      border-top: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    &:hover {
+      color: rgba(255, 255, 255, 0.9);
     }
   }
 
-  svg {
-    margin-right: -35px;
-    margin-bottom: -7px;
+  span {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  input {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const CheckboxEdit = styled.div`
+  color: rgba(255, 255, 255, 0.7);
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+
+    & + p {
+      border-top: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    &:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  span {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  input {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 44px;
+    background: #6095b2;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7);
+    border: 0;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${darken(0.03, "#6095b2")};
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
   }
 `;
 
@@ -146,8 +217,26 @@ export const ButtonGroup = styled.div`
 `;
 
 export const InputGroup = styled.div`
-  width: 70%;
-  margin-right: 20px;
+  width: 80%;
+
+  input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border: 0;
+    border-radius: 4px;
+    height: 44px;
+    padding: 0px 40px;
+    color: #fff;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  svg {
+    margin-right: -35px;
+    margin-bottom: -7px;
+  }
 
   @media (max-width: 330px) {
     input {
@@ -157,6 +246,7 @@ export const InputGroup = styled.div`
 `;
 
 export const Table = styled.div`
+  margin-top: 10px;
   ul {
     margin-left: -5px;
   }
@@ -174,29 +264,42 @@ export const Table = styled.div`
     height: 44px;
     margin: 10px 0;
     transition: background 0.2s;
+    div {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      height: 44px;
+      width: 50%;
+      padding: 10px;
+      h5 {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      span {
+        margin-top: 3px;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
 
     &::placeholder {
       color: rgba(255, 255, 255, 0.7);
     }
 
     h5 {
-      color: rgba(255, 255, 255, 0.7);
-      padding: 10px;
-    }
-    #description {
-      width: 60%;
     }
 
     #timestamp {
       width: 20%;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 10px;
     }
 
     #edit {
-      width: 5%;
+      width: 10 %;
     }
 
     #addmembers {
-      width: 15%;
+      width: 20%;
       display: none;
       font-size: 12px;
       background: #6095b2;
@@ -204,12 +307,12 @@ export const Table = styled.div`
       padding: 5px;
     }
     #addcourses {
-      width: 15%;
+      width: 20%;
       display: none;
       font-size: 12px;
       background: #6095b2;
       border-radius: 4px;
-      margin-left: 5px;
+      margin-left: 0px 10px;
       padding: 5px;
     }
 
@@ -240,9 +343,20 @@ export const Table = styled.div`
     @media (max-width: 768px) {
       #addmembers {
         font-size: 10px;
+        width: 70px;
       }
       #addcourses {
         font-size: 10px;
+      }
+
+      #timestamp {
+        display: none;
+      }
+      #addmembers {
+        display: block;
+      }
+      #addcourses {
+        display: block;
       }
     }
   }
@@ -255,7 +369,8 @@ export const NewGroup = styled.div`
   padding: 15px;
 
   form {
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
     input {
       background: rgba(0, 0, 0, 0.2);
       border: 0;
@@ -263,20 +378,41 @@ export const NewGroup = styled.div`
       height: 44px;
       padding: 0 15px;
       color: #fff;
-      margin: 0 0 10px;
+      margin: 10px 0 5px 0;
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
       }
     }
 
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-end;
+
+      height: 32px;
+      width: 120px;
+      background: #6095b2;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.7);
+      border: 0;
+      border-radius: 4px;
+
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
     hr {
       border: 0;
       height: 1px;
       background: rgba(255, 255, 255, 0.2);
-      margin: 10px 0 20px;
+      margin: 10px 0 10px;
     }
 
+    h2 {
+      color: #fff;
+    }
     h3 {
       color: #fff;
     }
@@ -286,17 +422,18 @@ export const HeaderGroup = styled.div`
   display: flex;
   border: 0;
 
-  margin: 10px 0 20px;
+  margin: 5px 0 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   justify-content: space-between;
   h1 {
-    margin: 10px 0 20px;
+    margin: 10px 0 10px;
     color: #fff;
   }
 
   button {
+    margin-top: -50px;
     background: none;
-    border: none;
+    border: 0;
   }
 `;
 
@@ -314,23 +451,17 @@ export const Courses = styled.div`
   margin: 0px 0px;
   display: flex;
   flex-direction: column;
+`;
 
-  input {
-    margin-top: 15px;
-    width: 90%;
-  }
+export const TitleGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-  svg {
-    width: 10%;
-    color: rgba(255, 255, 255, 0.9);
-    border: 0;
-
-    cursor: pointer;
-
-    &:hover {
-      color: rgba(255, 255, 255, 0.7);
-    }
-  }
+export const BoxLoad = styled.div`
+  width: 120px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.1);
 `;
 
 export const Members = styled.div`
@@ -542,7 +673,7 @@ export const CurrentMembers = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  margin-top: 10px;
   border: 0;
   border-radius: 4px;
 
@@ -600,24 +731,16 @@ export const CurrentMembers = styled.div`
   }
 `;
 export const AddCourses = styled.div`
-  /* select {
-    background: rgba(0, 0, 0, 0.2);
-    border: 0;
-    border-radius: 4px;
-    height: 44px;
-    padding: 0 0;
-    color: #fff;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-  } */
+  #scrollcheckbox {
+    padding-right: 20px;
+    max-height: 210px;
+  }
 `;
 
 export const AddMembers = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
+  justify-content: space-between;
   form {
     display: flex;
     flex-direction: row;
@@ -632,7 +755,6 @@ export const AddMembers = styled.div`
       color: #fff;
       margin: 0 0 10px;
 
-      margin-top: 15px;
       width: 80%;
 
       &::placeholder {
@@ -642,13 +764,12 @@ export const AddMembers = styled.div`
     button {
       width: 15%;
       height: 44px;
-      margin: 15px 0 0 10px;
+      margin: 0 0 0 10px;
       background: #6095b2;
       font-weight: bold;
       color: rgba(255, 255, 255, 0.7);
       border: 0;
       border-radius: 4px;
-      margin-right: -40px;
 
       font-size: 14px;
       transition: background 0.2s;
@@ -662,6 +783,26 @@ export const AddMembers = styled.div`
       width: 30px;
       height: 30px;
     }
+  }
+`;
+
+export const Spinner = styled.div`
+  padding-left: 8px;
+  svg {
+    animation: ${rotate} 2s linear infinite;
+
+    color: #fff;
+  }
+`;
+
+export const SpinnerCourseNewGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    animation: ${rotate} 2s linear infinite;
+
+    color: #fff;
   }
 `;
 
@@ -749,13 +890,46 @@ export const EditGroupAddCourses = styled.div`
 
   h3 {
     color: #fff;
+    margin-bottom: 15px;
   }
 
   hr {
     border: 0;
     height: 1px;
     background: rgba(255, 255, 255, 0.2);
-    margin: 10px 0 20px;
+    margin: 10px 0 10px;
+  }
+`;
+
+export const ButtonSaveMember = styled.div`
+  display: flex;
+  flex-direction: column;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin-bottom: 10px;
+    height: 32px;
+    width: 120px;
+    background: #6095b2;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7);
+    border: 0;
+    border-radius: 4px;
+
+    font-size: 14px;
+    transition: background 0.2s;
+
+    svg {
+      animation: ${rotate} 2s linear infinite;
+      margin-left: 10px;
+      color: #fff;
+    }
+
+    &:hover {
+      background: ${darken(0.03, "#6095b2")};
+    }
   }
 `;
 
@@ -766,62 +940,46 @@ export const CoursesEdit = styled.div`
   width: 100%;
 
   #scrollcourses {
+    padding: 0;
     max-height: 150px;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin-bottom: 10px;
+    height: 32px;
+    width: 120px;
+    background: #6095b2;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7);
+    border: 0;
+    border-radius: 4px;
+
+    font-size: 14px;
+    transition: background 0.2s;
+
+    svg {
+      animation: ${rotate} 2s linear infinite;
+      margin-left: 10px;
+      color: #fff;
+    }
+
+    &:hover {
+      background: ${darken(0.03, "#6095b2")};
+    }
   }
 `;
 
 export const AddCoursesEdit = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-  form {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-
-    input {
-      background: rgba(0, 0, 0, 0.2);
-      border: 0;
-      border-radius: 4px;
-      height: 44px;
-      padding: 0 15px;
-      color: #fff;
-      margin: 0 0 10px;
-
-      margin-top: 15px;
-      width: 90%;
-
-      &::placeholder {
-        color: rgba(255, 255, 255, 0.7);
-      }
-    }
-    button {
-      width: 8%;
-      height: 44px;
-      margin: 15px 0 0 10px;
-      background: #6095b2;
-      font-weight: bold;
-      color: rgba(255, 255, 255, 0.7);
-      border: 0;
-      border-radius: 4px;
-      margin-right: -40px;
-
-      font-size: 14px;
-      transition: background 0.2s;
-
-      &:hover {
-        background: ${darken(0.03, "#6095b2")};
-      }
-    }
-
-    svg {
-      width: 30px;
-      height: 30px;
-    }
+  #scrollcheckboxeditgroup {
+    max-height: 150px;
+    padding-right: 20px;
   }
 `;
 
-export const CurrentCourses = styled.div`
+export const CurrentCourses = styled.ul`
   background: rgba(0, 0, 0, 0.2);
   min-height: 44px;
   display: flex;
@@ -832,42 +990,20 @@ export const CurrentCourses = styled.div`
   border: 0;
   border-radius: 4px;
 
-  ul {
+  li {
     width: 100%;
-    li {
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px 0;
-      img {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-      }
-      span {
-        color: #fff;
-        width: 30%;
-      }
-      button {
-        background: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
 
-        color: rgba(255, 255, 255, 0.7);
-        border: 0;
-        border-radius: 4px;
-        margin-right: 10px;
-        font-size: 14px;
-        transition: background 0.2s;
+    span {
+      color: #fff;
+      font-size: 12px;
+    }
 
-        svg {
-          width: 20px;
-          height: 20px;
-        }
-      }
-
-      & + li {
-        border-top: 0.5px solid #eee;
-      }
+    & + li {
+      border-top: 0.5px solid #eee;
     }
   }
 

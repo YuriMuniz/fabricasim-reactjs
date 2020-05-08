@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import Permissions from "../pages/Permissions";
 import AccessRequest from "../pages/AccessRequest";
 import CreateGroups from "../pages/CreateGroups";
+import AccessDenied from "../pages/AccessDenied";
 
 export default function Routes() {
   return (
@@ -30,14 +31,11 @@ export default function Routes() {
         isPrivate
       />
 
+      <Route path="/unauthorized" component={AccessDenied} isPrivate />
+
       <Route
-        path="/create-groups"
-        component={Authorization(CreateGroups, [
-          "SUPER",
-          "ADMIN+",
-          "ADMIN",
-          "TEACHER",
-        ])}
+        path="/groups"
+        component={Authorization(CreateGroups, ["SUPER", "ADMIN+", "ADMIN"])}
         isPrivate
       />
 

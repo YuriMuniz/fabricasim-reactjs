@@ -29,7 +29,7 @@ export const InputGroup = styled.div`
 
 export const Container = styled.div`
   max-width: 600px;
-  margin: 50px auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -112,10 +112,16 @@ export const User = styled.ul`
 export const ContentUser = styled.div`
   display: flex;
   flex-direction: column;
+
+  svg {
+    animation: ${rotate} 2s linear infinite;
+    color: #fff;
+    align-self: center;
+  }
 `;
 
 export const SelectedUser = styled.div`
-  margin-top: 30px;
+  margin-top: 10px;
   width: 100%;
   margin-left: -10px;
   background: rgba(0, 0, 0, 0.1);
@@ -123,8 +129,11 @@ export const SelectedUser = styled.div`
   padding: 15px 5px;
 
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    max-width: 500px;
+
     align-self: center;
     margin: 20px 0 0;
     height: 44px;
@@ -135,6 +144,13 @@ export const SelectedUser = styled.div`
     border-radius: 4px;
     font-size: 16px;
     transition: background 0.2;
+
+    svg {
+      animation: ${rotate} 2s linear infinite;
+      color: #fff;
+      align-self: center;
+      margin-left: 3px;
+    }
   }
 
   @media (max-width: 768px) {

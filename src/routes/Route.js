@@ -23,26 +23,27 @@ export default function RouteWrapper({
   }
 
   if (signed && !isPrivate) {
-    const authorizateAccessRequest =
+    const authorizateAccessRequestStudent =
       profile.roles.some((e) => ["STUDENT"].includes(e)) &&
       profile.roles.length === 1;
 
-    const authorizateCreateGroups = profile.roles.some((e) =>
-      ["SUPER", "ADMIN+", "ADMIN", "TEACHER"].includes(e)
-    );
+    const authorizateAccessRequestTeacher =
+      profile.roles.every((e) => ["TEACHER", "STUDENT"].includes(e)) &&
+      profile.roles.length === 2;
+
+    // const authorizateCreateGroups = profile.roles.some((e) =>
+    //   ["SUPER", "ADMIN+", "ADMIN"].includes(e)
+    // );
 
     const authorizatePermissions = profile.roles.some((e) =>
       ["SUPER", "ADMIN+", "ADMIN"].includes(e)
     );
 
-    if (authorizateAccessRequest && profile.roles.length === 1) {
-      return <Redirect to="/access-request" />;
+    if (authorizateAccessRequestStudent || authorizateAccessRequestTeacher) {
+      return <Redirect to="/unauthorized" />;
     }
     if (authorizatePermissions) {
-      return <Redirect to="/permissions" />;
-    }
-    if (authorizateCreateGroups) {
-      return <Redirect to="/create-groups" />;
+      return <Redirect to="/groups" />;
     }
   }
 

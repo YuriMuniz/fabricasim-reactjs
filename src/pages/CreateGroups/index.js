@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useSelector } from "react";
 
 import {
   MdSearch,
@@ -6,7 +6,6 @@ import {
   MdEdit,
   MdAddCircle,
   MdClose,
-  MdPersonAdd,
   MdWarning,
 } from "react-icons/md";
 
@@ -54,38 +53,17 @@ import {
   CoursesEdit,
   CurrentCourses,
   AddCoursesEdit,
+  Checkbox,
+  CheckboxEdit,
+  Spinner,
+  SpinnerTable,
+  SpinnerCourseNewGroup,
+  ButtonSaveMember,
+  TitleGroup,
+  BoxLoad,
 } from "./styles";
 
 export default function CreateGroups() {
-  const useStyles = makeStyles((theme) => ({
-    formControl: {
-      minWidth: 310,
-      maxWidth: 310,
-      fontSize: 12,
-      "&:before": {
-        // normal
-        borderBottom: `1px solid #eee`,
-        color: "#fff",
-      },
-      "&:after": {
-        // focused
-        borderBottom: `1px solid #eee`,
-        color: "#fff",
-      },
-      "&:hover:not(.Mui-disabled):not(.Mui-focused):not(.Mui-error):before": {
-        // hover
-        borderBottom: `3px solid #eee`,
-        color: "#fff",
-      },
-    },
-    select: {
-      color: "#fff",
-      fontSize: 12,
-    },
-  }));
-
-  const classes = useStyles();
-
   const [visibleTableGroups, setVisibleTableGroups] = useState(true);
   const [visibleNewGroup, setVisibleNewGroup] = useState(false);
   const [visibleEditGroup, setVisibleEditGroup] = useState(false);
@@ -98,8 +76,23 @@ export default function CreateGroups() {
   const [membersGroup, setMembersGroup] = useState([]);
   const [membersCacheGroup, setMembersCacheGroup] = useState([]);
 
+  const [emailRegisterUser, setEmailResgisterUser] = useState();
+
   const [loading, setLoading] = useState(false);
 
+  const [loadingGroups, setLoadingGroups] = useState(false);
+  const [loadingMembers, setLoadingMembers] = useState(false);
+  const [loadingAddMember, setLoadingAddMembers] = useState(false);
+  const [loadingSaveMember, setLoadingSaveMembers] = useState(false);
+  const [loadingCourses, setLoadingCourses] = useState(false);
+  const [loadingSaveGroup, setLoadingSaveGroup] = useState(false);
+  const [loadingCoursesInEditPage, setLoadingCoursesInEditPage] = useState(
+    false
+  );
+  const [
+    loadingSaveCoursesInEditPage,
+    setLoadingSaveCoursesInEditPage,
+  ] = useState(false);
   const [coursesGroup, setCoursesGroup] = useState([]);
 
   const [idSelectedGroup, setIdSelectedGroup] = useState();
@@ -112,6 +105,7 @@ export default function CreateGroups() {
   const [coursesId, setCoursesId] = useState([]);
 
   const [groups, setGroups] = useState(handleListGroups);
+  const [groupsLoad, setGroupsLoad] = useState([]);
 
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -136,9 +130,14 @@ export default function CreateGroups() {
   const roles = ["MANAGER", "VIEWER", "STUDENT"];
 
   async function handleListGroups() {
+    setLoadingGroups(true);
+
     const g = await api.get("group");
 
+    console.log(g);
     setGroups(g.data.groups);
+    setGroupsLoad(g.data.groups);
+    setLoadingGroups(false);
   }
 
   const ITEM_HEIGHT = 48;
@@ -153,18 +152,77 @@ export default function CreateGroups() {
     },
   };
 
+  const handleChangeCourseInEditPage = (event) => {
+    const ids = [];
+    for (let x = 0; x < coursesId.length; x++) {
+      ids.push(coursesId[x]);
+    }
+
+    const x = ids.includes(parseInt(event.target.value));
+    console.log(x);
+    if (x) {
+      const result = ids.filter((id) => id !== parseInt(event.target.value));
+
+      console.log(result);
+      setCoursesId(result);
+
+      const c = courses.filter((course) => result.includes(course.id));
+      console.log(c);
+      setCoursesGroup(c);
+      console.log(coursesGroup);
+      return;
+    }
+
+    ids.push(parseInt(event.target.value));
+
+    const c = courses.filter((course) => ids.includes(course.id));
+    console.log(c);
+    setCoursesGroup(c);
+    console.log(coursesGroup);
+
+    setCoursesId(ids);
+  };
+
   const handleChangeCourse = (event) => {
     console.log(event.target.value);
-    setCoursesId(event.target.value);
+    console.log(coursesId);
+    const courses = coursesId;
+    console.log(courses);
+
+    for (let x = 0; x < courses.length; x++) {
+      if (courses[x].id === event.target.value) {
+        console.log(courses);
+        courses.splice(x, 1);
+        setCoursesId(courses);
+        return;
+      }
+    }
+
+    const x = courses.some((c) => event.target.value.includes(c.id));
+    if (x) {
+      const result = courses.filter((c) => c !== event.target.value);
+      setCoursesId(result);
+      return;
+    }
+
+    courses.push({
+      id: event.target.value,
+    });
+
+    console.log(courses);
+    setCoursesId(courses);
   };
 
   async function handleClickNewGroup() {
-    setVisibleNewGroup(true);
     setVisibleTableGroups(false);
+    setVisibleNewGroup(true);
+    setLoadingCourses(true);
+
     setCoursesId([]);
     const c = await api.get("courses");
 
     setCourses(c.data);
+    setLoadingCourses(false);
   }
 
   function handleClickClose() {
@@ -197,21 +255,30 @@ export default function CreateGroups() {
   }
 
   async function handleClickAddMembers(event) {
+    setGroupSelectEdit();
+    setLoadingMembers(true);
     setVisibleTableGroups(false);
     setVisibleAddMembers(true);
     setIdSelectedGroup(event.target.value);
+
     const group = await api.get(`user-group/?id=${event.target.value}`, {});
 
+    setGroupSelectEdit(group.data);
     console.log(group);
     setMembersGroup(group.data.users);
+    setLoadingMembers(false);
   }
 
   async function handleClickAddCourses(event) {
+    setGroupSelectEdit();
     setVisibleTableGroups(false);
     setVisibleAddCourses(true);
+    setLoadingCoursesInEditPage(true);
     setIdSelectedGroup(event.target.value);
     const group = await api.get(`user-group/?id=${event.target.value}`, {});
+    setGroupSelectEdit(group.data);
     setCoursesGroup(group.data.courses);
+
     const c = await api.get("courses");
     const ids = [];
     for (let x = 0; x < group.data.courses.length; x++) {
@@ -220,6 +287,8 @@ export default function CreateGroups() {
 
     setCoursesId(ids);
     setCourses(c.data);
+    setLoadingCoursesInEditPage(false);
+    console.log(coursesId);
   }
 
   function handleToHideAlert() {
@@ -239,26 +308,29 @@ export default function CreateGroups() {
       setIsBr(false);
     }
   }
+  // function handleVerifyCourse(event) {
+  //   console.log(event.target.value);
+  //   const response = coursesGroup.some((c) =>
+  //     event.target.value.includes(c.id)
+  //   );
+  //   console.log(response);
+  //   return response;
+  // }
 
-  function handleGroupChange(event) {
-    setIdSelectedGroup(event.target.value);
-  }
+  // function handleChangeCheckBox() {}
+
+  // function handleGroupChange(event) {
+  //   setIdSelectedGroup(event.target.value);
+  // }
 
   async function handleSaveGroup({ description, resume }) {
-    console.log(description);
-    console.log(resume);
-    const idCourses = [];
-    for (let x = 0; x < coursesId.length; x++) {
-      idCourses.push({
-        id: coursesId[x],
-      });
-    }
+    setLoadingSaveGroup(true);
 
     try {
       await api.post("group", {
         groupDescription: description,
         groupResume: resume,
-        coursesId: idCourses,
+        coursesId,
       });
       const g = await api.get("group");
       setGroups(g.data.groups);
@@ -270,21 +342,28 @@ export default function CreateGroups() {
       toast.success(t("Grupo salvo"));
     } catch (err) {
       toast.error(t("Erro ao salvar grupo"));
+      setLoadingSaveGroup(false);
     }
+    setLoadingSaveGroup(false);
   }
 
   async function handleAddMembersCache({ email }) {
+    setLoadingAddMembers(true);
+    setVisibleNotFoundUser(false);
     console.log(membersGroup);
-
+    setEmailResgisterUser(email);
     const user = await api.get(`user-profiles/?email=${email}`, {});
     console.log(user);
     if (user.data === null) {
       setVisibleNotFoundUser(true);
+      setLoadingAddMembers(false);
+
       return;
     }
     for (let x = 0; x < membersGroup.length; x++) {
       if (membersGroup[x].id === user.data.userProfile.id) {
         toast.error(t("Esse e-mail já existe"));
+        setLoadingAddMembers(false);
         return;
       }
     }
@@ -309,13 +388,14 @@ export default function CreateGroups() {
       setMembersGroup(users);
       setMembersCacheGroup(users);
     }
-
+    setLoadingAddMembers(false);
     console.log(membersGroup);
     console.log(membersGroup.length);
     // console.log(user);
   }
 
   async function handleSaveMembersInGroup() {
+    setLoadingSaveMembers(true);
     const idMembers = [];
 
     for (let x = 0; x < membersGroup.length; x++) {
@@ -334,10 +414,13 @@ export default function CreateGroups() {
       handleClickClose();
     } catch (error) {
       toast.error(t("Erro ao adicionar membros ao grupo"));
+      setLoadingSaveMembers(false);
     }
+    setLoadingSaveMembers(false);
   }
 
   async function handleSaveCoursesInGroup() {
+    setLoadingSaveCoursesInEditPage(true);
     const idCourses = [];
     for (let x = 0; x < coursesId.length; x++) {
       idCourses.push({
@@ -354,7 +437,10 @@ export default function CreateGroups() {
       handleClickClose();
     } catch (error) {
       toast.error(t("Erro ao adicionar cursos ao grupo"));
+      setLoadingSaveCoursesInEditPage(false);
     }
+
+    setLoadingSaveCoursesInEditPage(false);
   }
 
   async function handleRemoveMember(event) {
@@ -442,31 +528,28 @@ export default function CreateGroups() {
   }
 
   async function searchUpdated(event) {
-    // setLoadingSearchEmail(true);
-    // setVisibleUsers(true);
-    // setVisibleUserSelected(false);
-    // setSearchTerm(event.target.value);
     const term = event.target.value === "" ? undefined : event.target.value;
     if (term === undefined) {
-      handleListGroups();
+      setGroups(groupsLoad);
+      return;
+    }
+    console.log(term);
+    console.log(groupsLoad);
+    const filter = groupsLoad.filter((group) => {
+      return group.groupDescription.toLowerCase().includes(term.toLowerCase());
+    });
+
+    if (!filter) {
+      setIsEmpty(true);
+      setGroups();
       return;
     }
 
-    const filteredGroup = await api.post("group-filter", {
-      description: term,
-    });
+    setGroups(filter);
+  }
 
-    setGroups(filteredGroup.data);
-
-    // if (usersFilteredEmail.data.length === 0) {
-    //   setIsEmpty(true);
-    //   setVisibleUserSelected(false);
-    // } else {
-    //   setIsEmpty(false);
-    // }
-
-    // setUsers(usersFilteredEmail.data);
-    // setLoadingSearchEmail(false);
+  function handleChangeEmailRegisterUser(event) {
+    setEmailResgisterUser(event.target.value);
   }
 
   return (
@@ -481,32 +564,32 @@ export default function CreateGroups() {
               placeholder={t("Pesquisar pelo nome")}
             />
           </InputGroup>
-          <ButtonGroup>
-            <button
-              id="button-register-user"
-              type="button"
-              onClick={handleClickRegisterUser}
-            >
-              <MdPersonAdd />
-            </button>
-            <button
-              id="button-register-group"
-              type="button"
-              onClick={handleClickNewGroup}
-            >
-              <MdGroupAdd />
-            </button>
-          </ButtonGroup>
+
+          <button
+            id="button-register-group"
+            type="button"
+            onClick={handleClickNewGroup}
+          >
+            <MdGroupAdd />
+          </button>
         </Header>
       )}
 
+      {loadingGroups && (
+        <SpinnerTable>
+          <FaSpinner size={30} />{" "}
+        </SpinnerTable>
+      )}
       {visibleTableGroups && groups.length > 0 && (
         <Table>
           <Scroll>
             <ul>
               {groups.map((group) => (
                 <li>
-                  <h5 id="description">{group.groupDescription}</h5>{" "}
+                  <div>
+                    <h5 id="description">{group.groupDescription}</h5>{" "}
+                    <span id="owner">{group.groupOwner.userfirstName}</span>
+                  </div>
                   <h5 id="timestamp">
                     {format(
                       addHours(parseISO(group.timestamp), 3),
@@ -554,6 +637,16 @@ export default function CreateGroups() {
             </button>
           </HeaderGroup>
           <Form schema={schemaNewGroup} onSubmit={handleSaveGroup}>
+            {loadingSaveGroup && (
+              <button disabled type="submit">
+                {t("Salvar")}
+                <Spinner>
+                  <FaSpinner size={20} />
+                </Spinner>
+              </button>
+            )}
+            {!loadingSaveGroup && <button type="submit">{t("Salvar")}</button>}
+
             <Principal>
               <InputRocket
                 name="description"
@@ -566,34 +659,29 @@ export default function CreateGroups() {
 
             <Courses>
               <AddCourses>
-                <FormControl className={classes.formControl}>
-                  <h3>{t("Cursos")}</h3>
-                  <Select
-                    className={classes.select}
-                    labelId="demo-mutiple-name-label"
-                    id="demo-mutiple-name"
-                    multiple
-                    value={coursesId}
-                    onChange={handleChangeCourse}
-                    input={<Input classes={classes} />}
-                    MenuProps={MenuProps}
-                  >
+                <h3>{t("Cursos")}</h3>
+                <Scroll id="scrollcheckbox">
+                  <Checkbox>
+                    {loadingCourses && (
+                      <SpinnerCourseNewGroup>
+                        <FaSpinner size={20} />
+                      </SpinnerCourseNewGroup>
+                    )}
                     {courses.map((course) => (
-                      <MenuItem key={course.id} value={course.id}>
-                        {course.courseDescription}
-                      </MenuItem>
+                      <p>
+                        <span>{course.courseDescription}</span>
+
+                        <input
+                          value={course.id}
+                          type="checkbox"
+                          onChange={handleChangeCourse}
+                        />
+                      </p>
                     ))}
-                  </Select>
-                </FormControl>
+                  </Checkbox>
+                </Scroll>
               </AddCourses>
             </Courses>
-            <hr />
-            <Footer>
-              <button type="submit">{t("Salvar")}</button>
-              <button type="button" onClick={handleClickClose}>
-                {t("Cancelar")}
-              </button>
-            </Footer>
           </Form>
         </NewGroup>
       )}
@@ -634,14 +722,42 @@ export default function CreateGroups() {
               <MdClose color="#fff" />{" "}
             </button>
           </HeaderGroup>
-          <h3>{t("Membros")}</h3>
+
           <Members>
+            <TitleGroup>
+              {!groupSelectEdit && <BoxLoad />}
+              {groupSelectEdit && <h3>{groupSelectEdit.groupDescription}</h3>}
+
+              <ButtonSaveMember>
+                {loadingSaveMember && (
+                  <button
+                    type="button"
+                    disabled
+                    onClick={handleSaveMembersInGroup}
+                  >
+                    {t("Salvar")} <FaSpinner size={20} />
+                  </button>
+                )}
+                {!loadingSaveMember && (
+                  <button type="button" onClick={handleSaveMembersInGroup}>
+                    {t("Salvar")}
+                  </button>
+                )}
+              </ButtonSaveMember>
+            </TitleGroup>
+            <h3>{t("Membros")}</h3>
+
             <Scroll id="scrollmembers">
               <CurrentMembers>
-                {membersGroup.length === 0 && (
+                {loadingMembers && (
+                  <Spinner>
+                    <FaSpinner size={20} />
+                  </Spinner>
+                )}
+                {!loadingMembers && membersGroup.length === 0 && (
                   <h4>{t("Não existe usuário nesse grupo")}</h4>
                 )}
-                {membersGroup.length > 0 && (
+                {!loadingMembers && membersGroup.length > 0 && (
                   <ul>
                     {membersGroup.map((user) => (
                       <li>
@@ -662,7 +778,7 @@ export default function CreateGroups() {
                 )}
               </CurrentMembers>
             </Scroll>
-
+            <hr />
             <AddMembers>
               <Form onSubmit={handleAddMembersCache}>
                 <InputRocket
@@ -671,7 +787,12 @@ export default function CreateGroups() {
                   placeholder={t("E-mail")}
                 />
                 <button type="submit">
-                  <MdAddCircle size={40} />
+                  {loadingAddMember && (
+                    <Spinner>
+                      <FaSpinner size={20} />
+                    </Spinner>
+                  )}
+                  {!loadingAddMember && <MdAddCircle size={40} />}
                 </button>
               </Form>
             </AddMembers>
@@ -690,15 +811,6 @@ export default function CreateGroups() {
               </NotFoundUser>
             )}
           </Members>
-          <hr />
-          <Footer>
-            <button type="button" onClick={handleSaveMembersInGroup}>
-              {t("Salvar")}
-            </button>
-            <button type="button" onClick={handleClickClose}>
-              {t("Cancelar")}
-            </button>
-          </Footer>
         </EditGroupAddMembers>
       )}
 
@@ -710,65 +822,78 @@ export default function CreateGroups() {
               <MdClose color="#fff" />{" "}
             </button>
           </HeaderGroup>
-          <h3>{t("Cursos atuais")}</h3>
+
           <CoursesEdit>
+            <TitleGroup>
+              {!groupSelectEdit && <BoxLoad />}
+              {groupSelectEdit && <h3>{groupSelectEdit.groupDescription}</h3>}
+
+              <ButtonSaveMember>
+                {!loadingSaveCoursesInEditPage && (
+                  <button type="button" onClick={handleSaveCoursesInGroup}>
+                    {t("Salvar")}
+                  </button>
+                )}
+                {loadingSaveCoursesInEditPage && (
+                  <button
+                    disabled
+                    type="button"
+                    onClick={handleSaveCoursesInGroup}
+                  >
+                    {t("Salvar")} <FaSpinner size={20} />
+                  </button>
+                )}
+              </ButtonSaveMember>
+            </TitleGroup>
+
             <Scroll id="scrollcourses">
               <CurrentCourses>
-                {coursesGroup.length === 0 && (
+                {loadingCoursesInEditPage && (
+                  <Spinner>
+                    <FaSpinner size={20} />
+                  </Spinner>
+                )}
+                {!loadingCoursesInEditPage && coursesGroup.length === 0 && (
                   <h4>{t("Não existe curso nesse grupo")}</h4>
                 )}
-                {coursesGroup.length > 0 && (
-                  <ul>
+                {!loadingCoursesInEditPage && coursesGroup.length > 0 && (
+                  <>
                     {coursesGroup.map((course) => (
                       <li>
-                        <img
-                          src={
-                            course.courseImage ||
-                            "https://www.freepik.com/free-icon/image-interface-tile-symbol_755589.htm#page=1&query=no%20image&position=9"
-                          }
-                          alt="Course"
-                        />
-
                         <span>{course.courseDescription}</span>
-                        <span>{course.courseResume}</span>
                       </li>
                     ))}
-                  </ul>
+                  </>
                 )}
               </CurrentCourses>
             </Scroll>
             <hr />
             <AddCoursesEdit>
-              <FormControl className={classes.formControl}>
-                <h3>{t("Adicionar Cursos")}</h3>
-                <Select
-                  className={classes.select}
-                  labelId="demo-mutiple-name-label"
-                  id="demo-mutiple-name"
-                  multiple
-                  value={coursesId}
-                  onChange={handleChangeCourse}
-                  input={<Input classes={classes} />}
-                  MenuProps={MenuProps}
-                >
+              <h3>{t("Cursos")}</h3>
+              <Scroll id="scrollcheckboxeditgroup">
+                <CheckboxEdit>
+                  {loadingCourses && (
+                    <SpinnerCourseNewGroup>
+                      <FaSpinner size={20} />
+                    </SpinnerCourseNewGroup>
+                  )}
                   {courses.map((course) => (
-                    <MenuItem key={course.id} value={course.id}>
-                      {course.courseDescription}
-                    </MenuItem>
+                    <p>
+                      <span>{course.courseDescription}</span>
+                      <input
+                        value={course.id}
+                        type="checkbox"
+                        checked={coursesId.includes(course.id)}
+                        onChange={handleChangeCourseInEditPage}
+                        readOnly={false}
+                      />
+                    </p>
                   ))}
-                </Select>
-              </FormControl>
+                </CheckboxEdit>
+              </Scroll>
             </AddCoursesEdit>
           </CoursesEdit>
           <hr />
-          <Footer>
-            <button type="button" onClick={handleSaveCoursesInGroup}>
-              {t("Salvar")}
-            </button>
-            <button type="button" onClick={handleClickClose}>
-              {t("Cancelar")}
-            </button>
-          </Footer>
         </EditGroupAddCourses>
       )}
 
@@ -784,15 +909,18 @@ export default function CreateGroups() {
             <UserData>
               <div>
                 <InputRocket
+                  name="email"
+                  type="email"
+                  onChange={handleChangeEmailRegisterUser}
+                  value={emailRegisterUser}
+                  placeholder={t("E-mail")}
+                />
+                <InputRocket
                   name="name"
                   type="text"
                   placeholder={t("Nome completo")}
                 />
-                <InputRocket
-                  name="email"
-                  type="email"
-                  placeholder={t("E-mail")}
-                />
+
                 <InputRocket
                   name="cellNumber"
                   type="number"
@@ -839,16 +967,6 @@ export default function CreateGroups() {
                     placeholder={t("Estado")}
                   />
                 )}
-                <select onChange={handleGroupChange}>
-                  <option disabled selected>
-                    {t("Cursos")}
-                  </option>
-                  {groups.map((group) => (
-                    <option key={group.id} value={group.id}>
-                      {group.groupDescription}
-                    </option>
-                  ))}
-                </select>
               </div>
             </UserData>
             <hr />
