@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: #fff;
+  background: rgba(0, 0, 0, 0.1);
   padding: 0 30px;
 `;
 
@@ -26,7 +26,7 @@ export const Content = styled.div`
 
     a {
       font-weight: bold;
-      color: #243943;
+      color: rgba(255, 255, 255, 0.7);
       margin-right: 15px;
       padding-left: 15px;
 
@@ -73,6 +73,8 @@ export const Content = styled.div`
       }
       #menu {
         display: block;
+        color: #fff;
+        opacity: 0.9;
       }
     }
   }
@@ -86,13 +88,13 @@ export const MenuMobile = styled.div`
   @media (max-width: 768px) {
     display: flex;
     justify-content: space-between;
-    background: #243943;
+
     width: 100%;
     height: auto;
     margin-top: 5px;
     padding: 15px 0px 10px 0;
 
-    border-radius: 4px 4px 0px 0px;
+    border: 0;
     a {
       font-weight: normal;
       font-size: 12px;
@@ -117,20 +119,30 @@ export const Profile = styled.div`
   padding-left: 20px;
   border-left: 1px solid #eee;
 
+  svg {
+    color: #fff;
+    opacity: 0.5;
+  }
+
   div {
     text-align: right;
     margin-right: 10px;
 
     strong {
       display: block;
-      color: #243943;
+      color: #fff;
     }
 
     a {
       display: block;
       margin-top: 2px;
       font-size: 12px;
-      color: #6095b2;
+      color: #fff;
+      opacity: 0.9;
+
+      &:hover {
+        opacity: 0.9;
+      }
     }
   }
   @media (max-width: 768px) {
