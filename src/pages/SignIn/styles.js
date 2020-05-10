@@ -10,22 +10,22 @@ const rotate = keyframes`
 `;
 
 export const Container = styled.div`
-  svg {
+  #spinner {
     position: absolute;
     animation: ${rotate} 2s linear infinite;
     margin-top: -10px;
     color: rgba(255, 255, 255, 0.7);
   }
-
-  @media (max-width: 330px) {
-    margin-top: 80px;
-  }
 `;
 
 export const Images = styled.div`
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100px;
+  @media (max-width: 330px) {
+    margin-top: 50px;
+  }
 `;

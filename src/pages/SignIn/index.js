@@ -15,6 +15,7 @@ import logo from "../../assets/logo.png";
 
 import lt from "../../assets/logo-text-white.png";
 import { Images, Container } from "./styles";
+import SelectLangAuth from "../../components/SelectLangAuth";
 
 export default function SignIn() {
   const { t } = useTranslation();
@@ -35,6 +36,7 @@ export default function SignIn() {
 
   return (
     <Container>
+      <SelectLangAuth />
       <Images>
         <img src={logo} alt="Fábrica Sim" />
 
@@ -44,6 +46,7 @@ export default function SignIn() {
           alt="Fábrica Sim"
         />
       </Images>
+
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input name="email" type="email" placeholder={t("Seu e-mail")} />
         <Input name="password" type="password" placeholder={t("Sua senha")} />
@@ -51,7 +54,7 @@ export default function SignIn() {
         {!loading && <button type="submit">{t("Acessar")}</button>}
         {loading && (
           <button type="submit" disabled="disabled">
-            <FaSpinner size={20} />
+            <FaSpinner id="spinner" size={20} />
           </button>
         )}
 

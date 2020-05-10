@@ -15,6 +15,8 @@ import { signUpRequest } from "../../store/modules/auth/actions";
 
 import listHelper from "../../util/listHelper";
 
+import SelectLangAuth from "../../components/SelectLangAuth";
+
 import { Images } from "./styles";
 
 export default function SignIn() {
@@ -100,6 +102,7 @@ export default function SignIn() {
 
   return (
     <>
+      <SelectLangAuth />
       <Images>
         <img src={logo} alt="Fábrica Sim" />
       </Images>

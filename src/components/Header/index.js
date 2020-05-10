@@ -5,15 +5,57 @@ import { useSelector } from "react-redux";
 
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 
+import { FaAngleDown } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
+import SelectLang from "../SelectLang";
 
 import logo from "../../assets/logo-full.png";
-import { Container, Content, Profile, MenuMobile } from "./styles";
+
+import brazil from "../../assets/brazil-icon-flag.png";
+import spanish from "../../assets/spain-icon-flag.png";
+import united from "../../assets/united-icon-flag-32.png";
+
+import {
+  Container,
+  Content,
+  Profile,
+  MenuMobile,
+  SelectLanguage,
+  LanguageItem,
+  LanguageItems,
+  ContainerLanguage,
+} from "./styles";
 
 export default function Header() {
   const profile = useSelector((state) => state.user.profile);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [visibleMenuMobile, setVisibleMenuMobile] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("Português");
+  const [selectFlag, setSelectFlag] = useState(brazil);
+  const [visibleOptionsLanguages, setVisibleOptionsLanguages] = useState(false);
+
+  const changeLanguage = (lng) => {
+    setVisibleOptionsLanguages(false);
+    i18n.changeLanguage(lng);
+    if (lng === "en") {
+      setSelectedLanguage(t("Inglês"));
+      setSelectFlag(united);
+    }
+    if (lng === "es") {
+      setSelectedLanguage(t("Espanhol"));
+      setSelectFlag(spanish);
+    }
+
+    if (lng === "pt") {
+      setSelectedLanguage(t("Português"));
+      setSelectFlag(brazil);
+    }
+  };
+
+  function handleVisibleOptionsLanguage() {
+    setVisibleOptionsLanguages(!visibleOptionsLanguages);
+  }
 
   function handleVisibleMenuMobile() {
     setVisibleMenuMobile(!visibleMenuMobile);
@@ -43,7 +85,9 @@ export default function Header() {
           <button type="button" onClick={handleVisibleMenuMobile}>
             <MdMenu id="menu" size={30} />
           </button>
-
+          <div id="selectlangweb">
+            <SelectLang />
+          </div>
           <Profile>
             <div>
               <strong>{profile.name}</strong>
@@ -55,13 +99,18 @@ export default function Header() {
       </Content>
       {visibleMenuMobile && (
         <MenuMobile>
-          {authorizatePermissions && (
-            <Link to="/permissions">{t("Permissões")}</Link>
-          )}
-          {authorizateCreateGroups && <Link to="/groups">{t("Grupos")}</Link>}
-          {!authorizateAccessRequest && (
-            <Link to="/profile">{t("Meu perfil")}</Link>
-          )}
+          <div id="select">
+            <SelectLang />
+          </div>
+          <div id="links">
+            {authorizatePermissions && (
+              <Link to="/permissions">{t("Permissões")}</Link>
+            )}
+            {authorizateCreateGroups && <Link to="/groups">{t("Grupos")}</Link>}
+            {!authorizateAccessRequest && (
+              <Link to="/profile">{t("Meu perfil")}</Link>
+            )}
+          </div>
         </MenuMobile>
       )}
     </Container>

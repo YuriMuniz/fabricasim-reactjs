@@ -66,6 +66,7 @@ export const Content = styled.div`
     #menu {
       display: none;
     }
+
     @media (max-width: 768px) {
       justify-content: space-between;
       button {
@@ -75,6 +76,9 @@ export const Content = styled.div`
         display: block;
         color: #fff;
         opacity: 0.9;
+      }
+      #selectlangweb {
+        display: none;
       }
     }
   }
@@ -87,12 +91,23 @@ export const Content = styled.div`
 export const MenuMobile = styled.div`
   @media (max-width: 768px) {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 
     width: 100%;
     height: auto;
-    margin-top: 5px;
-    padding: 15px 0px 10px 0;
+    margin-top: 0px;
+    padding: 0px 0px 0px 0;
+
+    #links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: -40px;
+    }
+
+    #select {
+      align-self: flex-end;
+      margin-top: -10px;
+    }
 
     border: 0;
     a {
@@ -151,6 +166,76 @@ export const Profile = styled.div`
     }
     #account-ico {
       display: none;
+    }
+  }
+`;
+
+export const ContainerLanguage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 82px;
+  margin-top: 50px;
+  @media (max-width: 768px) {
+    #languagesweb {
+      display: none;
+    }
+    #languageweb {
+      display: none;
+    }
+  }
+`;
+
+export const SelectLanguage = styled.div`
+  width: 120px;
+  display: flex;
+  align-items: center;
+  padding: 3px 5px;
+  justify-content: space-between;
+  border: 1px solid #243943;
+  background: #20333c;
+  color: #fff;
+
+  div {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 5px;
+      width: 16px;
+    }
+  }
+  button {
+    color: #fff;
+    border: 0;
+    background: none;
+  }
+`;
+
+export const LanguageItems = styled.div`
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+  height: 55px;
+  hr {
+    height: 1px;
+    color: #eee;
+  }
+`;
+
+export const LanguageItem = styled.div`
+  background: #20333c;
+
+  button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 5px;
+    color: #fff;
+
+    img {
+      width: 16px;
+      margin-right: 5px;
     }
   }
 `;

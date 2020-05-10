@@ -6,9 +6,7 @@ export const Wrapper = styled.div`
   height: 100%;
   background: #243943;
   display: flex;
-
   justify-content: center;
-  align-items: center;
 `;
 
 export const Content = styled.div`
@@ -21,6 +19,7 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 30px;
+    height: 100%;
 
     input {
       background: rgba(0, 0, 0, 0.1);
@@ -91,6 +90,10 @@ export const Content = styled.div`
         opacity: 1;
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    height: 100%;
   }
 
   @media (max-width: 330px) {
