@@ -12,11 +12,28 @@ import spanish from "../../assets/spain-icon-flag.png";
 import united from "../../assets/united-icon-flag-32.png";
 
 export default function SelectLang() {
-  const [selectedLanguage, setSelectedLanguage] = useState("Português");
+  const { t, i18n } = useTranslation();
   const [selectFlag, setSelectFlag] = useState(brazil);
   const [visibleOptionsLanguages, setVisibleOptionsLanguages] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState();
+  useState(handleLoadLanguage);
 
-  const { t, i18n } = useTranslation();
+  function handleLoadLanguage() {
+    const lng = i18n.language;
+    if (lng === "en") {
+      setSelectedLanguage(t("Inglês"));
+      setSelectFlag(united);
+    }
+    if (lng === "es") {
+      setSelectedLanguage(t("Espanhol"));
+      setSelectFlag(spanish);
+    }
+
+    if (lng === "pt") {
+      setSelectedLanguage(t("Português"));
+      setSelectFlag(brazil);
+    }
+  }
 
   const changeLanguage = (lng) => {
     setVisibleOptionsLanguages(false);
