@@ -7,6 +7,14 @@ export const Container = styled.div`
     }
   }
 
+  @media (max-height: 501px) {
+    height: 130%;
+    background: #243943;
+    form {
+      margin: 10px 5px;
+    }
+  }
+
   @media (max-width: 330px) {
     form {
       height: 350px;

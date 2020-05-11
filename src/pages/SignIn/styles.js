@@ -16,6 +16,12 @@ export const Container = styled.div`
     margin-top: -10px;
     color: rgba(255, 255, 255, 0.7);
   }
+
+  @media (max-height: 501px) {
+    form {
+      margin: 30px 5px;
+    }
+  }
 `;
 
 export const Images = styled.div`
@@ -27,5 +33,13 @@ export const Images = styled.div`
   height: 100px;
   @media (max-width: 330px) {
     margin-top: 0px;
+  }
+
+  @media (max-height: 501px) {
+    margin-top: 0px;
+
+    form {
+      margin: 10px 5px;
+    }
   }
 `;
