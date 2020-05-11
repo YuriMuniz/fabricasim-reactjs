@@ -178,6 +178,7 @@ export default function Permissions() {
 
     if (r.includes("ADMIN+")) {
       setIsAdminMore(true);
+      setIsAdmin(true);
     }
 
     setUserSelected(user.data);
@@ -218,7 +219,9 @@ export default function Permissions() {
   function handleChange(event) {
     if (event.target.value === "admin+") {
       setIsAdminMore(!isAdminMore);
+      setIsAdmin(true);
     }
+
     if (event.target.value === "admin") {
       setIsAdmin(!isAdmin);
     }
@@ -308,7 +311,21 @@ export default function Permissions() {
                     )}
                   </p>
                 )}
-                {authorizateAdminMore && (
+                {isAdminMore && (
+                  <p>
+                    <span>ADMIN</span>
+                    {userSelected && (
+                      <input
+                        value="admin"
+                        checked={isAdmin}
+                        disabled
+                        type="checkbox"
+                        onChange={handleChange}
+                      />
+                    )}
+                  </p>
+                )}
+                {!isAdminMore && authorizateAdminMore && (
                   <p>
                     <span>ADMIN</span>
                     {userSelected && (
