@@ -36,7 +36,10 @@ export default function SignIn() {
 
   return (
     <Container>
-      <SelectLangAuth />
+      <div>
+        <SelectLangAuth />
+      </div>
+
       <Images>
         <img src={logo} alt="Fábrica Sim" />
 

@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   margin-top: 30px;
   width: 100%;
+  height: 100%;
   max-width: 315px;
   text-align: center;
 
@@ -19,7 +20,6 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 30px;
-    height: 100%;
 
     input {
       background: rgba(0, 0, 0, 0.1);
@@ -84,24 +84,10 @@ export const Content = styled.div`
       margin-top: 15px;
       font-size: 16px;
       opacity: 0.8;
-      margin-bottom: 30px;
 
       &:hover {
         opacity: 1;
       }
-    }
-  }
-
-  @media (max-width: 768px) {
-    height: 100%;
-  }
-
-  @media (max-width: 330px) {
-    height: 100%;
-    background: #243943;
-
-    form {
-      background: #243943;
     }
   }
 `;

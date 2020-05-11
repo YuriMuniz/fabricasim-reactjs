@@ -1,11 +1,35 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  @media (max-width: 760px) {
+    form {
+      height: 450px;
+    }
+  }
+
+  @media (max-width: 330px) {
+    form {
+      height: 350px;
+
+      input {
+        font-size: 12px;
+      }
+      button {
+        font-size: 12px;
+      }
+      a {
+        font-size: 12px;
+      }
+    }
+  }
+`;
+
 export const Images = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  margin-top: -50px;
   height: 60px;
 `;
 

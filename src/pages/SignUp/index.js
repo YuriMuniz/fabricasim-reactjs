@@ -17,7 +17,7 @@ import listHelper from "../../util/listHelper";
 
 import SelectLangAuth from "../../components/SelectLangAuth";
 
-import { Images } from "./styles";
+import { Images, Container } from "./styles";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -101,7 +101,7 @@ export default function SignIn() {
   }
 
   return (
-    <>
+    <Container>
       <SelectLangAuth />
       <Images>
         <img src={logo} alt="Fábrica Sim" />
@@ -161,6 +161,6 @@ export default function SignIn() {
 
         <Link to="/">{t("Já tenho login")} </Link>
       </Form>
-    </>
+    </Container>
   );
 }

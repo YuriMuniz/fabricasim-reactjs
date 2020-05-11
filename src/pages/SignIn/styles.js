@@ -19,13 +19,13 @@ export const Container = styled.div`
 `;
 
 export const Images = styled.div`
-  margin-top: 120px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100px;
   @media (max-width: 330px) {
-    margin-top: 50px;
+    margin-top: 0px;
   }
 `;

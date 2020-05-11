@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 export const ContainerLanguage = styled.div`
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+
   align-items: flex-end;
-  align-self: flex-end;
-  height: auto;
+
+  height: 81px;
+
   margin-top: -20px;
   margin-right: -500px;
   @media (max-width: 768px) {
