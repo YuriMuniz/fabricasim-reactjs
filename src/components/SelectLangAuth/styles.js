@@ -10,7 +10,7 @@ export const ContainerLanguage = styled.div`
   height: 81px;
 
   margin-top: -20px;
-  margin-right: -500px;
+  margin-right: -470px;
   @media (max-width: 768px) {
     margin-top: -20px;
     margin-right: 0px;
