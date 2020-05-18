@@ -8,7 +8,7 @@ import {
   MdClose,
   MdWarning,
 } from "react-icons/md";
-
+import Truncate from "react-truncate";
 import { FaSpinner, FaUser } from "react-icons/fa";
 
 import { parseISO, format, addHours } from "date-fns";
@@ -61,6 +61,8 @@ import {
   ButtonSaveMember,
   TitleGroup,
   BoxLoad,
+  AddFabricoin,
+  TitleUser,
 } from "./styles";
 
 export default function CreateGroups() {
@@ -70,7 +72,10 @@ export default function CreateGroups() {
   const [visibleRegisterUser, setVisibleRegisterUser] = useState(false);
   const [visibleAddMembers, setVisibleAddMembers] = useState(false);
   const [visibleAddCourses, setVisibleAddCourses] = useState(false);
-
+  const [visibleAddFabricoinGroup, setVisibleAddFabricoinGroup] = useState(
+    false
+  );
+  const [visibleAddFabricoinUser, setVisibleAddFabricoinUser] = useState(false);
   const [visibleNotFoundUser, setVisibleNotFoundUser] = useState(false);
 
   const [membersGroup, setMembersGroup] = useState([]);
@@ -94,7 +99,7 @@ export default function CreateGroups() {
     setLoadingSaveCoursesInEditPage,
   ] = useState(false);
   const [coursesGroup, setCoursesGroup] = useState([]);
-
+  const [selectedUser, setSelectedUser] = useState();
   const [idSelectedGroup, setIdSelectedGroup] = useState();
   const [groupSelectEdit, setGroupSelectEdit] = useState();
 
@@ -126,6 +131,15 @@ export default function CreateGroups() {
     description: Yup.string().required(t("A descrição é obrigatória")),
     resume: Yup.string().required(t("O resumo é obrigatório")),
   });
+
+  const schemaAddFabricoin = Yup.object().shape({
+    amount: Yup.string().required(t("A quantidade é obrigatória")),
+  });
+  // const schemaAddEmail = Yup.object().shape({
+  //   email: Yup.string()
+  //     .email(t("Insira um e-mail válido"))
+  //     .required(t("O email é obrigatório")),
+  // });
 
   const roles = ["MANAGER", "VIEWER", "STUDENT"];
 
@@ -233,6 +247,8 @@ export default function CreateGroups() {
     setVisibleAddCourses(false);
     setVisibleAddMembers(false);
     setVisibleNotFoundUser(false);
+    setVisibleAddFabricoinGroup(false);
+    setVisibleAddFabricoinUser(false);
   }
 
   async function handleClickEditGroup(event) {
@@ -268,6 +284,37 @@ export default function CreateGroups() {
     setMembersGroup(group.data.users);
     setLoadingMembers(false);
   }
+  async function handleClickAddFabricoinGroups(event) {
+    setGroupSelectEdit();
+    setVisibleTableGroups(false);
+    setVisibleAddFabricoinGroup(true);
+    setIdSelectedGroup(event.target.value);
+
+    const group = await api.get(`user-group/?id=${event.target.value}`, {});
+
+    setGroupSelectEdit(group.data);
+    console.log(group);
+  }
+
+  function handleClickCloseAddFabricoinUser() {
+    setVisibleAddMembers(true);
+    setVisibleAddFabricoinUser(false);
+  }
+
+  async function handleClickAddFabricoinUser(event) {
+    setSelectedUser();
+    console.log(event.target.value);
+    setVisibleAddMembers(false);
+    setVisibleAddFabricoinUser(true);
+
+    const user = await api.get(
+      `application-users/?id=${event.target.value}`,
+      {}
+    );
+
+    setSelectedUser(user.data);
+    console.log(user);
+  }
 
   async function handleClickAddCourses(event) {
     setGroupSelectEdit();
@@ -277,7 +324,17 @@ export default function CreateGroups() {
     setIdSelectedGroup(event.target.value);
     const group = await api.get(`user-group/?id=${event.target.value}`, {});
     setGroupSelectEdit(group.data);
-    setCoursesGroup(group.data.courses);
+
+    const coursesSort = group.data.courses;
+    function compare(a, b) {
+      if (a.courseDescription < b.courseDescription) return -1;
+      if (a.courseDescription > b.courseDescription) return 1;
+      return 0;
+    }
+
+    coursesSort.sort(compare);
+
+    setCoursesGroup(coursesSort);
 
     const c = await api.get("courses");
     const ids = [];
@@ -348,6 +405,10 @@ export default function CreateGroups() {
   }
 
   async function handleAddMembersCache({ email }) {
+    if (email === "") {
+      toast.error(t("O e-mail é obrigatório"));
+      return;
+    }
     setLoadingAddMembers(true);
     setVisibleNotFoundUser(false);
     console.log(membersGroup);
@@ -502,8 +563,15 @@ export default function CreateGroups() {
         state,
         idGroup: idSelectedGroup,
       });
+      const group = await api.get(`user-group/?id=${groupSelectEdit.id}`, {});
+      // setGroupSelectEdit(group.data);
+      // console.log(group);
+      setMembersGroup(group.data.users);
       setLoading(false);
-      handleClickClose();
+      setVisibleRegisterUser(false);
+      setVisibleNotFoundUser(false);
+      setVisibleAddMembers(true);
+
       toast.success(t("Usuário registrado"));
     } catch (error) {
       toast.error(t("Erro ao registrar usuário"));
@@ -552,6 +620,10 @@ export default function CreateGroups() {
     setEmailResgisterUser(event.target.value);
   }
 
+  async function handleSubmitAddFabricoinGroup({ amount }) {}
+
+  async function handleSubmitAddFabricoinUser({ amount }) {}
+
   return (
     <Container>
       {visibleTableGroups && (
@@ -587,15 +659,27 @@ export default function CreateGroups() {
               {groups.map((group) => (
                 <li>
                   <div>
-                    <h5 id="description">{group.groupDescription}</h5>{" "}
+                    <Truncate
+                      element="h5"
+                      width="120"
+                      ellipsis={<span>...</span>}
+                    >
+                      {group.groupDescription}
+                    </Truncate>
+
                     <span id="owner">{group.groupOwner.userfirstName}</span>
                   </div>
                   <h5 id="timestamp">
-                    {format(
-                      addHours(parseISO(group.timestamp), 3),
-                      "dd/MM/yyyy HH:mm"
-                    )}
+                    {format(parseISO(group.timestamp), "dd/MM/yyyy HH:mm")}
                   </h5>
+                  <button
+                    type="button"
+                    id="addfabricoin"
+                    value={group.id}
+                    onClick={handleClickAddFabricoinGroups}
+                  >
+                    +f
+                  </button>
                   <button
                     type="button"
                     id="addmembers"
@@ -765,6 +849,14 @@ export default function CreateGroups() {
 
                         <span>{user.userfirstName}</span>
                         <span>{user.userCellNumber}</span>
+                        <button
+                          type="button"
+                          id="addfabricoin"
+                          value={user.id}
+                          onClick={handleClickAddFabricoinUser}
+                        >
+                          +f
+                        </button>
                         <button
                           type="button"
                           value={user.id}
@@ -983,6 +1075,84 @@ export default function CreateGroups() {
             </Footer>
           </Form>
         </RegisterUser>
+      )}
+
+      {visibleAddFabricoinGroup && (
+        <AddFabricoin>
+          <HeaderGroup>
+            <h1>{t("Adicionar fabricoin")}</h1>
+            <button type="button" onClick={handleClickClose}>
+              <MdClose color="#fff" />{" "}
+            </button>
+          </HeaderGroup>
+          {!groupSelectEdit && <BoxLoad />}
+          {groupSelectEdit && <h3>{groupSelectEdit.groupDescription}</h3>}
+          <Form
+            schema={schemaAddFabricoin}
+            onSubmit={handleSubmitAddFabricoinGroup}
+          >
+            <h5>{t("Defina a quantidade de fabricoins grupo")}</h5>
+            <InputRocket
+              name="amount"
+              type="number"
+              placeholder={t("Quantidade")}
+            />
+
+            <hr />
+            <Footer>
+              {!loading && <button type="submit">{t("Salvar")}</button>}
+              {loading && (
+                <button type="submit" disabled="disabled">
+                  {t("Salvar")} <FaSpinner size={20} />
+                </button>
+              )}
+              <button type="button" onClick={handleClickClose}>
+                {t("Cancelar")}
+              </button>
+            </Footer>
+          </Form>
+        </AddFabricoin>
+      )}
+
+      {visibleAddFabricoinUser && (
+        <AddFabricoin>
+          <HeaderGroup>
+            <h1>{t("Adicionar fabricoin")}</h1>
+            <button type="button" onClick={handleClickCloseAddFabricoinUser}>
+              <MdClose color="#fff" />{" "}
+            </button>
+          </HeaderGroup>
+          <TitleUser>
+            {!selectedUser && <BoxLoad />}
+            {selectedUser && <h4>{selectedUser.userProfile.userFirstName}</h4>}
+            {!selectedUser && <BoxLoad />}
+            {selectedUser && <span>{selectedUser.userName}</span>}
+          </TitleUser>
+          <Form
+            schema={schemaAddFabricoin}
+            onSubmit={handleSubmitAddFabricoinUser}
+          >
+            <h5>{t("Defina a quantidade de fabricoins usuário")}</h5>
+            <InputRocket
+              name="amount"
+              type="number"
+              placeholder={t("Quantidade")}
+            />
+
+            <hr />
+            <Footer>
+              {!loading && <button type="submit">{t("Salvar")}</button>}
+              {loading && (
+                <button type="submit" disabled="disabled">
+                  {t("Salvar")} <FaSpinner size={20} />
+                </button>
+              )}
+              <button type="button" onClick={handleClickCloseAddFabricoinUser}>
+                {t("Cancelar")}
+              </button>
+            </Footer>
+          </Form>
+        </AddFabricoin>
       )}
     </Container>
   );

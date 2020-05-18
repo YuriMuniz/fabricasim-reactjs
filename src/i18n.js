@@ -94,6 +94,15 @@ const resources = {
       Inglês: "Inglês",
       Espanhol: "Espanhol",
       Português: "Português",
+      "Sua conta de usuário foi criada":
+        "Sua conta de usuário foi criada. Você ainda não tem permissões para intervir.",
+      "Adicionar fabricoin": "Adicionar fabricoin",
+      Quantidade: "Quantidade",
+      "A quantidade é obrigatória": "A quantidade é obrigatória.",
+      "Defina a quantidade de fabricoins grupo":
+        "Defina a quantidade de fabricoins que você disponibilizará para cada membro do grupo.",
+      "Defina a quantidade de fabricoins usuário":
+        "Defina a quantidade de fabricoins que você disponibilizará para esse usuário.",
     },
   },
   es: {
@@ -189,6 +198,15 @@ const resources = {
       Inglês: "Ingles",
       Espanhol: "Espanol",
       Português: "Portugués",
+      "Sua conta de usuário foi criada":
+        "Sua conta de usuário foi criada. Você ainda não tem permissões para intervir.",
+      "Adicionar fabricoin": "Adicionar fabricoin",
+      Quantidade: "Quantidade",
+      "A quantidade é obrigatória": "A quantidade é obrigatória.",
+      "Defina a quantidade de fabricoins grupo":
+        "Defina a quantidade de fabricoins que você disponibilizará para cada membro do grupo.",
+      "Defina a quantidade de fabricoins usuário":
+        "Defina a quantidade de fabricoins que você disponibilizará para esse usuário.",
     },
   },
   en: {
@@ -286,6 +304,15 @@ const resources = {
       Inglês: "English",
       Espanhol: "Spanish",
       Português: "Portuguese",
+      "Sua conta de usuário foi criada":
+        "Sua conta de usuário foi criada. Você ainda não tem permissões para intervir.",
+      "Adicionar fabricoin": "Adicionar fabricoin",
+      Quantidade: "Quantidade",
+      "A quantidade é obrigatória": "A quantidade é obrigatória.",
+      "Defina a quantidade de fabricoins grupo":
+        "Defina a quantidade de fabricoins que você disponibilizará para cada membro do grupo.",
+      "Defina a quantidade de fabricoins usuário":
+        "Defina a quantidade de fabricoins que você disponibilizará para esse usuário.",
     },
   },
 };

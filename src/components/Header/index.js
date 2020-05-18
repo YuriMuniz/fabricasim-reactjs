@@ -107,9 +107,8 @@ export default function Header() {
               <Link to="/permissions">{t("Permissões")}</Link>
             )}
             {authorizateCreateGroups && <Link to="/groups">{t("Grupos")}</Link>}
-            {!authorizateAccessRequest && (
-              <Link to="/profile">{t("Meu perfil")}</Link>
-            )}
+
+            <Link to="/profile">{t("Meu perfil")}</Link>
           </div>
         </MenuMobile>
       )}

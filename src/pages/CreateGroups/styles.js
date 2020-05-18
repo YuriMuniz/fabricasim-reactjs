@@ -275,6 +275,10 @@ export const Table = styled.div`
         color: rgba(255, 255, 255, 0.7);
       }
       span {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      #owner {
         margin-top: 3px;
         font-size: 10px;
         color: rgba(255, 255, 255, 0.7);
@@ -295,7 +299,7 @@ export const Table = styled.div`
     }
 
     #edit {
-      width: 10 %;
+      width: 10%;
     }
 
     #addmembers {
@@ -312,7 +316,16 @@ export const Table = styled.div`
       font-size: 12px;
       background: #6095b2;
       border-radius: 4px;
-      margin-left: 0px 10px;
+      margin: 0px 10px;
+      padding: 5px;
+    }
+    #addfabricoin {
+      width: 10%;
+      display: none;
+      font-size: 14px;
+      background: #6095b2;
+      border-radius: 4px;
+      margin: 0px 10px;
       padding: 5px;
     }
 
@@ -338,15 +351,19 @@ export const Table = styled.div`
       #addcourses {
         display: block;
       }
+      #addfabricoin {
+        display: block;
+      }
     }
 
     @media (max-width: 768px) {
-      #addmembers {
-        font-size: 10px;
-        width: 70px;
-      }
-      #addcourses {
-        font-size: 10px;
+      div {
+        span {
+          font-size: 10px;
+        }
+        #owner {
+          font-size: 8px;
+        }
       }
 
       #timestamp {
@@ -354,10 +371,91 @@ export const Table = styled.div`
       }
       #addmembers {
         display: block;
+        font-size: 10px;
+        padding: 3px;
+        width: 70px;
+        margin: 0px 5px;
       }
       #addcourses {
         display: block;
+        font-size: 10px;
+        margin: 0px 5px;
+        padding: 3px;
       }
+      #addfabricoin {
+        display: block;
+        font-size: 10px;
+        padding: 3px;
+        margin-left: -12px;
+      }
+    }
+  }
+`;
+
+export const TitleUser = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+  }
+`;
+
+export const AddFabricoin = styled.div`
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 15px;
+
+  h3 {
+    color: #fff;
+  }
+
+  h4 {
+    color: #fff;
+  }
+
+  h5 {
+    margin: 20px 0 0 0;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    input {
+      background: rgba(0, 0, 0, 0.2);
+      border: 0;
+      border-radius: 4px;
+      height: 44px;
+      padding: 0 15px;
+      color: #fff;
+      margin: 10px 0 5px 0;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+    span {
+      color: #fb6f91;
+      align-self: flex-start;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 10px 0 10px;
+    }
+
+    h2 {
+      color: #fff;
+    }
+    h3 {
+      color: #fff;
     }
   }
 `;
@@ -708,6 +806,21 @@ export const CurrentMembers = styled.div`
           height: 20px;
         }
       }
+      #addfabricoin {
+        width: 7%;
+        height: 22px;
+        margin: 0 15px;
+        background: #6095b2;
+
+        color: rgba(255, 255, 255, 0.7);
+        border: 0;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background 0.2s;
+        &:hover {
+          background: ${darken(0.03, "#6095b2")};
+        }
+      }
 
       & + li {
         border-top: 0.5px solid #eee;
@@ -754,9 +867,7 @@ export const AddMembers = styled.div`
       padding: 0 15px;
       color: #fff;
       margin: 0 0 10px;
-
       width: 80%;
-
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
       }
@@ -770,15 +881,12 @@ export const AddMembers = styled.div`
       color: rgba(255, 255, 255, 0.7);
       border: 0;
       border-radius: 4px;
-
       font-size: 14px;
       transition: background 0.2s;
-
       &:hover {
         background: ${darken(0.03, "#6095b2")};
       }
     }
-
     svg {
       width: 30px;
       height: 30px;
