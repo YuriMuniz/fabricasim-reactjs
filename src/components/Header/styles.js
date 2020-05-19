@@ -144,7 +144,7 @@ export const Profile = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    width: 60px;
+    width: 70px;
     text-align: right;
     margin-right: 10px;
 
