@@ -103,7 +103,7 @@ const resources = {
         "Defina a quantidade de fabricoins que você vai atribuir para cada membro do grupo.",
       "Defina a quantidade de fabricoins usuário":
         "Defina a quantidade de fabricoins que você vai atribuir para esse usuário.",
-      "Fabricoin atribuido com sucesso": "Fabricoin atribuido com sucesso.",
+      "Fabricoin atribuído com sucesso": "Fabricoin atribuído com sucesso.",
       "Erro ao atribuir fabricoin": "Erro ao atribuir fabricoin.",
       "Não existe usuário no grupo.": "Não existe usuário no grupo.",
     },

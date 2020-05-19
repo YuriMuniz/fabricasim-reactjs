@@ -641,7 +641,7 @@ export default function CreateGroups() {
         });
 
         handleClickClose();
-        toast.success(t("Fabricoin atribuido com sucesso"));
+        toast.success(t("Fabricoin atribuído com sucesso"));
       } else {
         toast.error(t("Não existe usuário no grupo."));
       }
