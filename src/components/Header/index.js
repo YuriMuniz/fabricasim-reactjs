@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 
-import { FaAngleDown } from "react-icons/fa";
-
 import { Link } from "react-router-dom";
 import SelectLang from "../SelectLang";
 
@@ -16,16 +14,7 @@ import brazil from "../../assets/brazil-icon-flag.png";
 import spanish from "../../assets/spain-icon-flag.png";
 import united from "../../assets/united-icon-flag-32.png";
 
-import {
-  Container,
-  Content,
-  Profile,
-  MenuMobile,
-  SelectLanguage,
-  LanguageItem,
-  LanguageItems,
-  ContainerLanguage,
-} from "./styles";
+import { Container, Content, Profile, MenuMobile } from "./styles";
 
 export default function Header() {
   const profile = useSelector((state) => state.user.profile);

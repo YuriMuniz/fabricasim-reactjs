@@ -13,7 +13,6 @@ import { signInRequest } from "../../store/modules/auth/actions";
 
 import logo from "../../assets/logo-delorenzo.jpeg";
 
-import lt from "../../assets/logo-text-white.png";
 import { Images, Container } from "./styles";
 import SelectLangAuth from "../../components/SelectLangAuth";
 

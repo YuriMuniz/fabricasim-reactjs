@@ -1,4 +1,4 @@
-import React, { useState, useSelector } from "react";
+import React, { useState } from "react";
 
 import {
   MdSearch,
@@ -11,19 +11,13 @@ import {
 import Truncate from "react-truncate";
 import { FaSpinner, FaUser } from "react-icons/fa";
 
-import { parseISO, format, addHours } from "date-fns";
+import { parseISO, format } from "date-fns";
 
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 import { Form, Input as InputRocket } from "@rocketseat/unform";
 
-import Input from "@material-ui/core/Input";
-
-import FormControl from "@material-ui/core/FormControl";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import * as Yup from "yup";
 import listHelper from "../../util/listHelper";
 import api from "../../services/api";
@@ -46,7 +40,6 @@ import {
   Scroll,
   RegisterUser,
   UserData,
-  ButtonGroup,
   EditGroupAddMembers,
   NotFoundUser,
   EditGroupAddCourses,
@@ -149,8 +142,6 @@ export default function CreateGroups() {
   //     .required(t("O email é obrigatório")),
   // });
 
-  const roles = ["MANAGER", "VIEWER", "STUDENT"];
-
   async function handleListGroups() {
     setLoadingGroups(true);
 
@@ -161,18 +152,6 @@ export default function CreateGroups() {
     setGroupsLoad(g.data.groups);
     setLoadingGroups(false);
   }
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 310,
-        fontSize: 12,
-      },
-    },
-  };
 
   const handleChangeCourseInEditPage = (event) => {
     const ids = [];
@@ -445,6 +424,7 @@ export default function CreateGroups() {
         userfirstName: user.data.userProfile.userFirstName,
         userCellNumber: user.data.userProfile.userCellNumber,
         email,
+        fabricoinBalance: false,
       });
 
       setMembersGroup(users);
@@ -899,7 +879,7 @@ export default function CreateGroups() {
 
                         <span>{user.userfirstName}</span>
                         <span id="user-cell">{user.userCellNumber}</span>
-                        {user.fabricoinBalance > 0 && (
+                        {user.fabricoinBalance && (
                           <>
                             <span id="fabricoin-amount">
                               {user.fabricoinBalance}

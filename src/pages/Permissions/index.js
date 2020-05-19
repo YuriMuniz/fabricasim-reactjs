@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Form, Input } from "@rocketseat/unform";
@@ -95,55 +95,6 @@ export default function Permissions() {
 
     setUsers(filter);
   }
-
-  // async function searchUpdated(event) {
-  //   // setI(event.target.value.length);
-  //   console.log(event.target);
-  //   setLoadingSearchEmail(true);
-  //   setVisibleUsers(true);
-  //   setVisibleUserSelected(false);
-  //   setSearchTerm(event.target.value);
-  //   const term = event.target.value === "" ? undefined : event.target.value;
-
-  //   const usersFilteredEmail = await api.post("user-filter", {
-  //     email: term,
-  //   });
-
-  //   if (usersFilteredEmail.data.length === 0) {
-  //     setIsEmpty(true);
-  //     setVisibleUserSelected(false);
-  //   } else {
-  //     setIsEmpty(false);
-  //   }
-
-  //   setUsers(usersFilteredEmail.data);
-  //   setLoadingSearchEmail(false);
-  // }
-
-  // async function triggerChange(event) {
-  //   setIndex(event.target.value.length);
-  //   setLoadingSearchEmail(true);
-  //   setVisibleUsers(true);
-  //   setVisibleUserSelected(false);
-  //   setSearchTerm(event.target.value);
-
-  //   const term = event.target.value === "" ? undefined : event.target.value;
-
-  //   const usersFilteredEmail = await api.post("user-filter", {
-  //     email: term,
-  //     index: event.target.value.length,
-  //   });
-  //   console.log(index);
-  //   if (usersFilteredEmail.data.usersFilter.length === 0) {
-  //     setIsEmpty(true);
-  //     setVisibleUserSelected(false);
-  //   } else {
-  //     setIsEmpty(false);
-  //   }
-
-  //   setUsers(usersFilteredEmail.data);
-  //   setLoadingSearchEmail(false);
-  // }
 
   function handleSubmit() {}
 
