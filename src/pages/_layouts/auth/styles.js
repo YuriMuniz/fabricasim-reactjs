@@ -4,7 +4,7 @@ import { darken } from "polished";
 
 export const Wrapper = styled.div`
   min-height: 100%;
-  background: #243943;
+  background: #121214;
   display: flex;
   justify-content: center;
 `;
@@ -19,7 +19,7 @@ export const Content = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 60px;
 
     input {
       background: rgba(0, 0, 0, 0.1);
@@ -65,9 +65,10 @@ export const Content = styled.div`
     button {
       margin: 5px 0 0;
       height: 44px;
-      background: ${(props) => (props.disabled ? "#6095b2" : "#6095b2")};
+      background: #f1c40f;
       font-weight: bold;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(0, 0, 0, 0.8);
+
       border: 0;
       border-radius: 4px;
       font-size: 16px;
@@ -75,7 +76,8 @@ export const Content = styled.div`
 
       &:hover {
         background: ${(props) =>
-          props.disabled ? "#6095b2" : darken(0.03, "#6095b2")};
+          props.disabled ? "#ffd413" : darken(0.03, "#ffd413")};
+        opacity: 1;
       }
     }
 

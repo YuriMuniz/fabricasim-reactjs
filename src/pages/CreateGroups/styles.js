@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-import { darken } from "polished";
+import { darken, lighten } from "polished";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -16,7 +16,7 @@ const rotate = keyframes`
 export const Container = styled.div`
   max-width: 600px;
   margin: 20px auto;
-  background: #243943;
+  background: ${lighten(0.01, "#121214")};
 `;
 
 export const SpinnerTable = styled.div`
@@ -96,16 +96,16 @@ export const Header = styled.div`
     justify-content: center;
     width: 50px;
     height: 44px;
-    background: #6095b2;
+    background: #f1c40f;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.8);
     border: 0;
     border-radius: 4px;
     font-size: 14px;
     transition: background 0.2s;
 
     &:hover {
-      background: ${darken(0.03, "#6095b2")};
+      background: ${darken(0.03, "#f1c40f")};
     }
 
     svg {
@@ -306,7 +306,9 @@ export const Table = styled.div`
       width: 20%;
       display: none;
       font-size: 12px;
-      background: #6095b2;
+      background: #f1c40f;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.8);
       border-radius: 4px;
       padding: 5px;
     }
@@ -314,7 +316,9 @@ export const Table = styled.div`
       width: 20%;
       display: none;
       font-size: 12px;
-      background: #6095b2;
+      background: #f1c40f;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.8);
       border-radius: 4px;
       margin: 0px 10px;
       padding: 5px;
@@ -322,8 +326,10 @@ export const Table = styled.div`
     #addfabricoin {
       width: 10%;
       display: none;
-      font-size: 14px;
-      background: #6095b2;
+      font-size: 12px;
+      background: #f1c40f;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.8);
       border-radius: 4px;
       margin: 0px 10px;
       padding: 5px;
@@ -491,9 +497,11 @@ export const NewGroup = styled.div`
 
       height: 32px;
       width: 120px;
-      background: #6095b2;
+      background: #f1c40f;
       font-weight: bold;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(0, 0, 0, 0.8);
+      font-weight: bold;
+
       border: 0;
       border-radius: 4px;
 
@@ -584,9 +592,9 @@ export const Footer = styled.div`
     margin: 5px 5px 10px 0;
     height: 44px;
 
-    background: #6095b2;
+    background: #f1c40f;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.8);
     border: 0;
     border-radius: 4px;
 
@@ -596,15 +604,15 @@ export const Footer = styled.div`
     svg {
       animation: ${rotate} 2s linear infinite;
       margin-left: 5px;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(0, 0, 0, 0.8);
     }
 
     &:hover {
-      background: ${darken(0.03, "#6095b2")};
+      background: ${darken(0.03, "#f1c40f")};
     }
     & + button {
       background: none;
-
+      color: rgba(255, 255, 255, 0.7);
       &:hover {
         background: none;
         color: rgba(255, 255, 255, 0.9);
@@ -718,9 +726,8 @@ export const NotFoundUser = styled.div`
       margin-left: 10px;
       height: 32px;
       width: 40px;
-      background: #6095b2;
-
-      color: rgba(255, 255, 255, 0.7);
+      background: #f1c40f;
+      color: rgba(0, 0, 0, 0.8);
       border: 0;
       border-radius: 4px;
 
@@ -728,7 +735,7 @@ export const NotFoundUser = styled.div`
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, "#6095b2")};
+        background: ${darken(0.03, "#f1c40f")};
       }
     }
   }
@@ -795,15 +802,16 @@ export const CurrentMembers = styled.div`
         width: auto;
         height: 22px;
         margin: 0 15px;
-        background: #6095b2;
+        background: #f1c40f;
+        color: rgba(0, 0, 0, 0.8);
         padding: 3px 8px;
-        color: rgba(255, 255, 255, 0.7);
+
         border: 0;
         border-radius: 4px;
         font-size: 14px;
         transition: background 0.2s;
         &:hover {
-          background: ${darken(0.03, "#6095b2")};
+          background: ${darken(0.03, "#f1c40f")};
         }
       }
       button {
@@ -825,15 +833,15 @@ export const CurrentMembers = styled.div`
         width: 7%;
         height: 22px;
         margin: 0 15px;
-        background: #6095b2;
+        background: #f1c40f;
+        color: rgba(0, 0, 0, 0.8);
         padding: 3px 8px;
-        color: rgba(255, 255, 255, 0.7);
         border: 0;
         border-radius: 4px;
         font-size: 14px;
         transition: background 0.2s;
         &:hover {
-          background: ${darken(0.03, "#6095b2")};
+          background: ${darken(0.03, "#f1c40f")};
         }
       }
 
@@ -847,6 +855,15 @@ export const CurrentMembers = styled.div`
     color: #fff;
   }
 
+  @media (max-width: 720px) {
+    ul {
+      li {
+        #user-cell {
+          display: none;
+        }
+      }
+    }
+  }
   @media (max-width: 330px) {
     h1 {
       font-size: 16px;
@@ -906,15 +923,17 @@ export const AddMembers = styled.div`
       width: 15%;
       height: 44px;
       margin: 0 0 0 10px;
-      background: #6095b2;
+      background: #f1c40f;
       font-weight: bold;
       color: rgba(255, 255, 255, 0.7);
+      font-weight: bold;
+
       border: 0;
       border-radius: 4px;
       font-size: 14px;
       transition: background 0.2s;
       &:hover {
-        background: ${darken(0.03, "#6095b2")};
+        background: ${darken(0.03, "#f1c40f")};
       }
     }
     svg {
@@ -940,7 +959,7 @@ export const SpinnerCourseNewGroup = styled.div`
   svg {
     animation: ${rotate} 2s linear infinite;
 
-    color: #fff;
+    color: rgba(0, 0, 0, 0.8);
   }
 `;
 
@@ -1050,9 +1069,9 @@ export const ButtonSaveMember = styled.div`
     margin-bottom: 10px;
     height: 32px;
     width: 120px;
-    background: #6095b2;
+    background: #f1c40f;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.8);
     border: 0;
     border-radius: 4px;
 
@@ -1062,11 +1081,11 @@ export const ButtonSaveMember = styled.div`
     svg {
       animation: ${rotate} 2s linear infinite;
       margin-left: 10px;
-      color: #fff;
+      color: rgba(0, 0, 0, 0.8);
     }
 
     &:hover {
-      background: ${darken(0.03, "#6095b2")};
+      background: ${darken(0.03, "#f1c40f")};
     }
   }
 `;
@@ -1089,9 +1108,8 @@ export const CoursesEdit = styled.div`
     margin-bottom: 10px;
     height: 32px;
     width: 120px;
-    background: #6095b2;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.7);
+    background: #f1c40f;
+    color: rgba(0, 0, 0, 0.8);
     border: 0;
     border-radius: 4px;
 
@@ -1101,11 +1119,11 @@ export const CoursesEdit = styled.div`
     svg {
       animation: ${rotate} 2s linear infinite;
       margin-left: 10px;
-      color: #fff;
+      color: rgba(0, 0, 0, 0.8);
     }
 
     &:hover {
-      background: ${darken(0.03, "#6095b2")};
+      background: ${darken(0.03, "#f1c40f")};
     }
   }
 `;

@@ -63,16 +63,16 @@ export const Container = styled.div`
     button {
       margin: 5px 0 0;
       height: 44px;
-      background: #6095b2;
+      background: #f1c40f;
       font-weight: bold;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(0, 0, 0, 0.8);
       border: 0;
       border-radius: 4px;
       font-size: 16px;
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, "#91CBDA")};
+        background: ${darken(0.03, "#f1c40f")};
       }
     }
 

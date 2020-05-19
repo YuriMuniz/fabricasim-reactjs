@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { Form, Input } from "@rocketseat/unform";
 import * as Yup from "yup";
 
-import logo from "../../assets/logo-full.png";
+import logo from "../../assets/logo-delorenzo.jpeg";
 
 import { signUpRequest } from "../../store/modules/auth/actions";
 
@@ -104,7 +104,11 @@ export default function SignIn() {
     <Container>
       <SelectLangAuth />
       <Images>
-        <img src={logo} alt="Fábrica Sim" />
+        <img
+          src={logo}
+          style={{ width: "30%", marginTop: "50px" }}
+          alt="DeLorenzo"
+        />
       </Images>
 
       <Form schema={schema} onSubmit={handleSubmit}>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { lighten } from "polished";
 
 export const Wrapper = styled.div`
   min-height: 100%;
-  background: #243943;
+  background: ${lighten(0.01, "#121214")};
 `;

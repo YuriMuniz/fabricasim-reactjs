@@ -137,9 +137,9 @@ export const SelectedUser = styled.div`
     align-self: center;
     margin: 20px 0 0;
     height: 44px;
-    background: #6095b2;
+    background: #f1c40f;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.8);
     border: 0;
     border-radius: 4px;
     font-size: 16px;
@@ -147,7 +147,7 @@ export const SelectedUser = styled.div`
 
     svg {
       animation: ${rotate} 2s linear infinite;
-      color: #fff;
+      color: rgba(0, 0, 0, 0.8);
       align-self: center;
       margin-left: 3px;
     }

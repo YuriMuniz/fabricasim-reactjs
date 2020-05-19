@@ -11,7 +11,7 @@ import * as Yup from "yup";
 
 import { signInRequest } from "../../store/modules/auth/actions";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo-delorenzo.jpeg";
 
 import lt from "../../assets/logo-text-white.png";
 import { Images, Container } from "./styles";
@@ -41,13 +41,7 @@ export default function SignIn() {
       </div>
 
       <Images>
-        <img src={logo} alt="Fábrica Sim" />
-
-        <img
-          style={{ width: "50%", marginTop: "10px" }}
-          src={lt}
-          alt="Fábrica Sim"
-        />
+        <img src={logo} style={{ width: "50%" }} alt="DeLorenzo" />
       </Images>
 
       <Form schema={schema} onSubmit={handleSubmit}>

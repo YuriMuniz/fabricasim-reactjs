@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: rgba(0, 0, 0, 0.1);
+  background: #121214;
   padding: 0 30px;
 `;
 
@@ -18,20 +18,21 @@ export const Content = styled.div`
     align-items: center;
 
     img {
+      width: 15%;
       margin-right: 20px;
       padding-right: 20px;
-      border-right: 1px solid #eee;
+      border-right: 1px solid #f1c40f;
       max-width: 100%;
     }
 
     a {
       font-weight: bold;
-      color: rgba(255, 255, 255, 0.7);
+      color: #fff;
       margin-right: 15px;
       padding-left: 15px;
 
       & + a {
-        border-left: 0.5px solid #eee;
+        border-left: 0.5px solid #f1c40f;
       }
 
       &:hover {
@@ -41,6 +42,7 @@ export const Content = styled.div`
     @media (max-width: 768px) {
       img {
         border-right: 0px;
+        width: 30%;
         max-width: 100%;
       }
       a {
@@ -132,7 +134,7 @@ export const Profile = styled.div`
   display: flex;
   margin-left: 20px;
   padding-left: 20px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid #f1c40f;
 
   svg {
     color: #fff;
@@ -140,6 +142,9 @@ export const Profile = styled.div`
   }
 
   div {
+    display: flex;
+    flex-direction: column;
+    width: 60px;
     text-align: right;
     margin-right: 10px;
 

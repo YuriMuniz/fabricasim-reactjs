@@ -899,17 +899,23 @@ export default function CreateGroups() {
 
                         <span>{user.userfirstName}</span>
                         <span id="user-cell">{user.userCellNumber}</span>
-                        <span id="fabricoin-amount">
-                          {user.fabricoinBalance}
-                        </span>
-                        <button
-                          type="button"
-                          id="addfabricoin"
-                          value={user.id}
-                          onClick={handleClickAddFabricoinUser}
-                        >
-                          +f
-                        </button>
+                        {user.fabricoinBalance > 0 && (
+                          <>
+                            <span id="fabricoin-amount">
+                              {user.fabricoinBalance}
+                            </span>
+
+                            <button
+                              type="button"
+                              id="addfabricoin"
+                              value={user.id}
+                              onClick={handleClickAddFabricoinUser}
+                            >
+                              +f
+                            </button>
+                          </>
+                        )}
+
                         <button
                           type="button"
                           value={user.id}

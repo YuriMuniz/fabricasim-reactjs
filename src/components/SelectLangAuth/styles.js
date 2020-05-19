@@ -23,8 +23,8 @@ export const SelectLanguage = styled.div`
   align-items: center;
   padding: 3px 5px;
   justify-content: space-between;
-  border: 1px solid #243943;
-  background: #20333c;
+  border: 1px solid #f1c40f;
+  background: #121214;
   height: 27px;
   color: #fff;
 
@@ -56,7 +56,7 @@ export const LanguageItems = styled.div`
 `;
 
 export const LanguageItem = styled.div`
-  background: #20333c;
+  background: #121214;
 
   button {
     display: flex;

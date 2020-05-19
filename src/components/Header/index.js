@@ -10,7 +10,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SelectLang from "../SelectLang";
 
-import logo from "../../assets/logo-full.png";
+import logo from "../../assets/logo-delorenzo-2.png";
 
 import brazil from "../../assets/brazil-icon-flag.png";
 import spanish from "../../assets/spain-icon-flag.png";
@@ -75,7 +75,7 @@ export default function Header() {
     <Container>
       <Content>
         <nav>
-          <img src={logo} alt="Fábrica Sim" />
+          <img src={logo} alt="Delorenzo" />
           {authorizatePermissions && (
             <Link to="/permissions">{t("PERMISSÕES")}</Link>
           )}

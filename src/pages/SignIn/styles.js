@@ -19,18 +19,19 @@ export const Container = styled.div`
 
   @media (max-height: 501px) {
     form {
-      margin: 30px 5px;
+      margin: 60px 5px;
     }
   }
 `;
 
 export const Images = styled.div`
-  margin-top: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100px;
+  margin-top: 80px;
+
   @media (max-width: 330px) {
     margin-top: 0px;
   }
