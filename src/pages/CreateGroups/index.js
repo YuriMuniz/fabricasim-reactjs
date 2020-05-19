@@ -882,7 +882,7 @@ export default function CreateGroups() {
                         {user.fabricoinBalance && (
                           <>
                             <span id="fabricoin-amount">
-                              {uuser.fabricoinBalance}
+                              {user.fabricoinBalance}
                             </span>
 
                             <button
