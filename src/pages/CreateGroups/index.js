@@ -424,9 +424,8 @@ export default function CreateGroups() {
         userfirstName: user.data.userProfile.userFirstName,
         userCellNumber: user.data.userProfile.userCellNumber,
         email,
-        fabricoinBalance: false,
       });
-
+      console.log(users);
       setMembersGroup(users);
       setMembersCacheGroup(users);
     } else {
@@ -879,7 +878,24 @@ export default function CreateGroups() {
 
                         <span>{user.userfirstName}</span>
                         <span id="user-cell">{user.userCellNumber}</span>
+
                         {user.fabricoinBalance && (
+                          <>
+                            <span id="fabricoin-amount">
+                              {uuser.fabricoinBalance}
+                            </span>
+
+                            <button
+                              type="button"
+                              id="addfabricoin"
+                              value={user.id}
+                              onClick={handleClickAddFabricoinUser}
+                            >
+                              +f
+                            </button>
+                          </>
+                        )}
+                        {user.fabricoinBalance === 0 && (
                           <>
                             <span id="fabricoin-amount">
                               {user.fabricoinBalance}
