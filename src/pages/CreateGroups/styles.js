@@ -791,6 +791,21 @@ export const CurrentMembers = styled.div`
         color: #fff;
         width: 30%;
       }
+      #fabricoin-amount {
+        width: auto;
+        height: 22px;
+        margin: 0 15px;
+        background: #6095b2;
+        padding: 3px 8px;
+        color: rgba(255, 255, 255, 0.7);
+        border: 0;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background 0.2s;
+        &:hover {
+          background: ${darken(0.03, "#6095b2")};
+        }
+      }
       button {
         background: none;
 
@@ -811,7 +826,7 @@ export const CurrentMembers = styled.div`
         height: 22px;
         margin: 0 15px;
         background: #6095b2;
-
+        padding: 3px 8px;
         color: rgba(255, 255, 255, 0.7);
         border: 0;
         border-radius: 4px;
@@ -836,9 +851,24 @@ export const CurrentMembers = styled.div`
     h1 {
       font-size: 16px;
     }
-    li {
-      span {
-        font-size: 12px;
+    ul {
+      li {
+        span {
+          font-size: 12px;
+        }
+        #user-cell {
+          display: none;
+        }
+        #fabricoin-amount {
+          width: auto;
+          height: auto;
+          font-size: 10px;
+        }
+        #addfabricoin {
+          width: auto;
+          height: auto;
+          font-size: 10px;
+        }
       }
     }
   }

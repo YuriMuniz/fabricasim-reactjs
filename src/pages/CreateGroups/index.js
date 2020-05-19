@@ -94,6 +94,7 @@ export default function CreateGroups() {
   const [loadingCoursesInEditPage, setLoadingCoursesInEditPage] = useState(
     false
   );
+  const [loadingAddFabricoin, setLoadingAddFabricoin] = useState(false);
   const [
     loadingSaveCoursesInEditPage,
     setLoadingSaveCoursesInEditPage,
@@ -133,7 +134,14 @@ export default function CreateGroups() {
   });
 
   const schemaAddFabricoin = Yup.object().shape({
-    amount: Yup.string().required(t("A quantidade é obrigatória")),
+    amount: Yup.number()
+      .integer(t("Digite um número inteiro."))
+      .required(t("A quantidade é obrigatória")),
+  });
+  const schemaAddFabricoinUser = Yup.object().shape({
+    amount: Yup.number()
+      .integer(t("Digite um número inteiro."))
+      .required(t("A quantidade é obrigatória")),
   });
   // const schemaAddEmail = Yup.object().shape({
   //   email: Yup.string()
@@ -272,6 +280,7 @@ export default function CreateGroups() {
 
   async function handleClickAddMembers(event) {
     setGroupSelectEdit();
+    setIdSelectedGroup();
     setLoadingMembers(true);
     setVisibleTableGroups(false);
     setVisibleAddMembers(true);
@@ -620,9 +629,50 @@ export default function CreateGroups() {
     setEmailResgisterUser(event.target.value);
   }
 
-  async function handleSubmitAddFabricoinGroup({ amount }) {}
+  async function handleSubmitAddFabricoinGroup({ amount }) {
+    setLoadingAddFabricoin(true);
+    try {
+      const group = await api.get(`user-group/?id=${groupSelectEdit.id}`, {});
+      console.log(group.data);
+      if (group.data.users.length !== 0) {
+        await api.post("add-fabricoin-users-group", {
+          amount: parseFloat(amount),
+          idGroup: groupSelectEdit.id,
+        });
 
-  async function handleSubmitAddFabricoinUser({ amount }) {}
+        handleClickClose();
+        toast.success(t("Fabricoin atribuido com sucesso"));
+      } else {
+        toast.error(t("Não existe usuário no grupo."));
+      }
+    } catch (err) {
+      setLoadingAddFabricoin(false);
+      toast.error(t("Erro ao atribuir fabricoin."));
+    }
+    setLoadingAddFabricoin(false);
+  }
+
+  async function handleSubmitAddFabricoinUser({ amount }) {
+    setLoadingAddFabricoin(true);
+    try {
+      await api.post("add-fabricoin-user", {
+        amount: parseFloat(amount),
+        userProfileId: selectedUser.userProfile.id,
+      });
+      const group = await api.get(`user-group/?id=${idSelectedGroup}`, {});
+
+      setGroupSelectEdit(group.data);
+      console.log(group);
+      setMembersGroup(group.data.users);
+
+      handleClickCloseAddFabricoinUser();
+      toast.success(t("Fabricoin atribuido com sucesso"));
+    } catch (err) {
+      setLoadingAddFabricoin(false);
+      toast.error(t("Erro ao atribuir fabricoin."));
+    }
+    setLoadingAddFabricoin(false);
+  }
 
   return (
     <Container>
@@ -848,7 +898,10 @@ export default function CreateGroups() {
                         <FaUser />
 
                         <span>{user.userfirstName}</span>
-                        <span>{user.userCellNumber}</span>
+                        <span id="user-cell">{user.userCellNumber}</span>
+                        <span id="fabricoin-amount">
+                          {user.fabricoinBalance}
+                        </span>
                         <button
                           type="button"
                           id="addfabricoin"
@@ -1100,8 +1153,10 @@ export default function CreateGroups() {
 
             <hr />
             <Footer>
-              {!loading && <button type="submit">{t("Salvar")}</button>}
-              {loading && (
+              {!loadingAddFabricoin && (
+                <button type="submit">{t("Salvar")}</button>
+              )}
+              {loadingAddFabricoin && (
                 <button type="submit" disabled="disabled">
                   {t("Salvar")} <FaSpinner size={20} />
                 </button>
@@ -1129,7 +1184,7 @@ export default function CreateGroups() {
             {selectedUser && <span>{selectedUser.userName}</span>}
           </TitleUser>
           <Form
-            schema={schemaAddFabricoin}
+            schema={schemaAddFabricoinUser}
             onSubmit={handleSubmitAddFabricoinUser}
           >
             <h5>{t("Defina a quantidade de fabricoins usuário")}</h5>
@@ -1141,8 +1196,10 @@ export default function CreateGroups() {
 
             <hr />
             <Footer>
-              {!loading && <button type="submit">{t("Salvar")}</button>}
-              {loading && (
+              {!loadingAddFabricoin && (
+                <button type="submit">{t("Salvar")}</button>
+              )}
+              {loadingAddFabricoin && (
                 <button type="submit" disabled="disabled">
                   {t("Salvar")} <FaSpinner size={20} />
                 </button>

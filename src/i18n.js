@@ -100,9 +100,12 @@ const resources = {
       Quantidade: "Quantidade",
       "A quantidade é obrigatória": "A quantidade é obrigatória.",
       "Defina a quantidade de fabricoins grupo":
-        "Defina a quantidade de fabricoins que você disponibilizará para cada membro do grupo.",
+        "Defina a quantidade de fabricoins que você vai atribuir para cada membro do grupo.",
       "Defina a quantidade de fabricoins usuário":
-        "Defina a quantidade de fabricoins que você disponibilizará para esse usuário.",
+        "Defina a quantidade de fabricoins que você vai atribuir para esse usuário.",
+      "Fabricoin atribuido com sucesso": "Fabricoin atribuido com sucesso.",
+      "Erro ao atribuir fabricoin": "Erro ao atribuir fabricoin.",
+      "Não existe usuário no grupo.": "Não existe usuário no grupo.",
     },
   },
   es: {
