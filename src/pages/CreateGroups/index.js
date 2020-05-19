@@ -666,7 +666,7 @@ export default function CreateGroups() {
       setMembersGroup(group.data.users);
 
       handleClickCloseAddFabricoinUser();
-      toast.success(t("Fabricoin atribuido com sucesso"));
+      toast.success(t("Fabricoin atribuído com sucesso"));
     } catch (err) {
       setLoadingAddFabricoin(false);
       toast.error(t("Erro ao atribuir fabricoin."));
