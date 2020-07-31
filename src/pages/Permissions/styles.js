@@ -43,7 +43,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     input {
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.3);
       width: 100%;
       border: 0;
       border-radius: 4px;

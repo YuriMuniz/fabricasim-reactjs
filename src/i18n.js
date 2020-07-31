@@ -202,14 +202,17 @@ const resources = {
       Espanhol: "Espanol",
       Português: "Portugués",
       "Sua conta de usuário foi criada":
-        "Sua conta de usuário foi criada. Você ainda não tem permissões para intervir.",
-      "Adicionar fabricoin": "Adicionar fabricoin",
-      Quantidade: "Quantidade",
-      "A quantidade é obrigatória": "A quantidade é obrigatória.",
-      "Defina a quantidade de fabricoins grupo":
-        "Defina a quantidade de fabricoins que você disponibilizará para cada membro do grupo.",
-      "Defina a quantidade de fabricoins usuário":
-        "Defina a quantidade de fabricoins que você disponibilizará para esse usuário.",
+        "Su cuenta de usuario ha sido creada. Aún no tienes permiso para intervenir.",
+        "Adicionar fabricoin": "Añadir fabricoin",
+        Quantidade: "Cantidad",
+        "A quantidade é obrigatória": "Cantidad requerida.",
+        "Defina a quantidade de fabricoins grupo":
+          "Defina la cantidad de fabricoins que asignará a cada miembro del grupo.",
+        "Defina a quantidade de fabricoins usuário":
+          "Establezca la cantidad de fabricoins que asignará a ese usuario.",
+        "Fabricoin atribuído com sucesso": "Fabricoin asignado correctamente.",
+        "Erro ao atribuir fabricoin": "Error al asignar fabricoin",
+        "Não existe usuário no grupo.": "No hay usuario en el grupo.",
     },
   },
   en: {
@@ -308,14 +311,17 @@ const resources = {
       Espanhol: "Spanish",
       Português: "Portuguese",
       "Sua conta de usuário foi criada":
-        "Sua conta de usuário foi criada. Você ainda não tem permissões para intervir.",
-      "Adicionar fabricoin": "Adicionar fabricoin",
-      Quantidade: "Quantidade",
-      "A quantidade é obrigatória": "A quantidade é obrigatória.",
-      "Defina a quantidade de fabricoins grupo":
-        "Defina a quantidade de fabricoins que você disponibilizará para cada membro do grupo.",
-      "Defina a quantidade de fabricoins usuário":
-        "Defina a quantidade de fabricoins que você disponibilizará para esse usuário.",
+        "Your user account has been created. You do not yet have permission to intervene.",
+        "Adicionar fabricoin": "Add fabricoin",
+        Quantidade: "Amount",
+        "A quantidade é obrigatória": "Amount is required",
+        "Defina a quantidade de fabricoins grupo":
+          "Set the amount of fabricoins you will assign to each member of the group.",
+        "Defina a quantidade de fabricoins usuário":
+          "Set the amount of fabricoin you will assign to that user.",
+        "Fabricoin atribuído com sucesso": "Fabricoin successfully assigned.",
+        "Erro ao atribuir fabricoin": "Error assigning fabricoin.",
+        "Não existe usuário no grupo.": "There is no user in the group.",
     },
   },
 };

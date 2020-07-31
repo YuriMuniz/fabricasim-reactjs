@@ -9,7 +9,7 @@ import {
   MdWarning,
 } from "react-icons/md";
 import Truncate from "react-truncate";
-import { FaSpinner, FaUser } from "react-icons/fa";
+import { FaSpinner, FaUser, FaUsers } from "react-icons/fa";
 
 import { parseISO, format } from "date-fns";
 
@@ -56,6 +56,7 @@ import {
   BoxLoad,
   AddFabricoin,
   TitleUser,
+  QtdUsers,
 } from "./styles";
 
 export default function CreateGroups() {
@@ -687,10 +688,10 @@ export default function CreateGroups() {
             <ul>
               {groups.map((group) => (
                 <li>
-                  <div>
+                  <div id="info">
                     <Truncate
                       element="h5"
-                      width="120"
+                      width="110"
                       ellipsis={<span>...</span>}
                     >
                       {group.groupDescription}
@@ -698,6 +699,11 @@ export default function CreateGroups() {
 
                     <span id="owner">{group.groupOwner.userfirstName}</span>
                   </div>
+                  <QtdUsers id="qtd-users">
+                    <FaUsers />
+                    <h5>{group.users.length}</h5>
+                  </QtdUsers>
+                  
                   <h5 id="timestamp">
                     {format(parseISO(group.timestamp), "dd/MM/yyyy HH:mm")}
                   </h5>

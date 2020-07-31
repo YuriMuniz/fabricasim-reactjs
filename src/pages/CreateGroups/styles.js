@@ -19,6 +19,33 @@ export const Container = styled.div`
   background: ${lighten(0.01, "#121214")};
 `;
 
+export const QtdUsers = styled.div`
+  display: flex;
+  flex-direction: row;
+  
+  h5 {
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 5px;
+  }
+  svg {
+    color: rgba(255, 255, 255, 0.7);
+    
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+      margin-right: 20px;
+      svg {
+        font-size: 10px;
+      }
+      h5 {
+        color: rgba(255, 255, 255, 0.7);
+        margin-left: 5px;
+        font-size: 10px;
+        }
+    }
+`;
+
 export const SpinnerTable = styled.div`
   display: flex;
   justify-content: center;
@@ -221,7 +248,7 @@ export const InputGroup = styled.div`
 
   input {
     width: 100%;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     border: 0;
     border-radius: 4px;
     height: 44px;
@@ -258,13 +285,13 @@ export const Table = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     border: 0;
     border-radius: 4px;
     height: 44px;
     margin: 10px 0;
     transition: background 0.2s;
-    div {
+   #info {
       display: flex;
       justify-content: space-between;
       flex-direction: column;
@@ -351,6 +378,9 @@ export const Table = styled.div`
       #timestamp {
         display: none;
       }
+      #qtd-users{
+        display: none;
+      }
       #addmembers {
         display: block;
       }
@@ -431,7 +461,7 @@ export const AddFabricoin = styled.div`
     display: flex;
     flex-direction: column;
     input {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.3);
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -476,7 +506,7 @@ export const NewGroup = styled.div`
     display: flex;
     flex-direction: column;
     input {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.3);
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -637,7 +667,7 @@ export const EditGroup = styled.div`
   form {
     margin-top: 15px;
     input {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.3);
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -907,7 +937,7 @@ export const AddMembers = styled.div`
     width: 100%;
 
     input {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.3);
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -998,7 +1028,7 @@ export const UserData = styled.div`
     flex-direction: column;
   }
   input {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     width: 250px;
     border: 0;
     border-radius: 4px;
