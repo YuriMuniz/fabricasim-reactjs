@@ -270,9 +270,18 @@ export default function CreateGroups() {
 
     setGroupSelectEdit(group.data);
     console.log(group);
-    setMembersGroup(group.data.users);
+
+    let users = [];
+    for(const user of group.data.users){
+      if(user.UserGroups.isActive){
+        users.push(user);
+      }
+    }
+    setMembersGroup(users);
+
     setLoadingMembers(false);
   }
+
   async function handleClickAddFabricoinGroups(event) {
     setGroupSelectEdit();
     setVisibleTableGroups(false);
@@ -315,6 +324,9 @@ export default function CreateGroups() {
     setGroupSelectEdit(group.data);
 
     const coursesSort = group.data.courses;
+
+    
+    
     function compare(a, b) {
       if (a.courseDescription < b.courseDescription) return -1;
       if (a.courseDescription > b.courseDescription) return 1;
@@ -563,6 +575,7 @@ export default function CreateGroups() {
 
       toast.success(t("Usuário registrado"));
     } catch (error) {
+      console.log(error);
       toast.error(t("Erro ao registrar usuário"));
     }
     setLoading(false);
