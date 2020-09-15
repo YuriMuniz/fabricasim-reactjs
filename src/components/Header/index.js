@@ -53,17 +53,12 @@ export default function Header() {
   const authorizateAccessRequest =
     profile.roles.some((e) => ["STUDENT"].includes(e)) &&
     profile.roles.length === 1;
-    
-    const authorizateCreateGroups = profile.roles.some((e) =>
+  const authorizateCreateGroups = profile.roles.some((e) =>
     ["SUPER", "ADMIN+", "ADMIN"].includes(e)
   );
   const authorizatePermissions = profile.roles.some((e) =>
     ["SUPER", "ADMIN+", "ADMIN"].includes(e)
   );
-
-  const authorizatePowerBi = profile.roles.some((e) =>
-  ["SUPER", "ADMIN+", "ADMIN", "TEACHER"].includes(e)
-);
 
   return (
     <Container>
@@ -74,7 +69,6 @@ export default function Header() {
             <Link to="/permissions">{t("PERMISSÕES")}</Link>
           )}
           {authorizateCreateGroups && <Link to="/groups">{t("GRUPOS")}</Link>}
-          {/* {authorizatePowerBi && <Link to="/groups">{t("Power Bi")}</Link>} */}
         </nav>
         <aside>
           <button type="button" onClick={handleVisibleMenuMobile}>

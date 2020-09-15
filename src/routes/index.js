@@ -11,7 +11,6 @@ import Permissions from "../pages/Permissions";
 import AccessRequest from "../pages/AccessRequest";
 import CreateGroups from "../pages/CreateGroups";
 import AccessDenied from "../pages/AccessDenied";
-import PowerBi from '../pages/PowerBi';
 
 export default function Routes() {
   return (
@@ -37,11 +36,6 @@ export default function Routes() {
       <Route
         path="/groups"
         component={Authorization(CreateGroups, ["SUPER", "ADMIN+", "ADMIN"])}
-        isPrivate
-      />
-      <Route
-        path="/power-bi"
-        component={Authorization(PowerBi, ["SUPER", "ADMIN+", "ADMIN", "TEACHER"])}
         isPrivate
       />
 
