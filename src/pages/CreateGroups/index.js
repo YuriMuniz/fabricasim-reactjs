@@ -271,14 +271,18 @@ export default function CreateGroups() {
     setGroupSelectEdit(group.data);
     console.log(group);
 
-    let users = [];
+    let usersActive = [];
+    
     for(const user of group.data.users){
-      // if(user.UserGroups.isActive){
-      //   users.push(user);
-      // }
-      users.push(user);
+      console.log(user);
+      if(user.UserGroups.isActive===true){
+        console.log(user.UserGroups.isActive);
+        usersActive.push(user);
+      }
+      
     }
-    setMembersGroup(users);
+    console.log(usersActive);
+    setMembersGroup(usersActive);
 
     setLoadingMembers(false);
   }
