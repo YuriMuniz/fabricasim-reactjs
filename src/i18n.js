@@ -106,6 +106,8 @@ const resources = {
       "Fabricoin atribuído com sucesso": "Fabricoin atribuído com sucesso.",
       "Erro ao atribuir fabricoin": "Erro ao atribuir fabricoin.",
       "Não existe usuário no grupo.": "Não existe usuário no grupo.",
+      "RELATÓRIOS": "RELATÓRIOS",
+      "Loading the report": "Carregando o relatório..."
     },
   },
   es: {
@@ -213,6 +215,8 @@ const resources = {
         "Fabricoin atribuído com sucesso": "Fabricoin asignado correctamente.",
         "Erro ao atribuir fabricoin": "Error al asignar fabricoin",
         "Não existe usuário no grupo.": "No hay usuario en el grupo.",
+        "RELATÓRIOS": "INFORMES",
+        "Loading the report": "Cargando el informe..."
     },
   },
   en: {
@@ -322,6 +326,8 @@ const resources = {
         "Fabricoin atribuído com sucesso": "Fabricoin successfully assigned.",
         "Erro ao atribuir fabricoin": "Error assigning fabricoin.",
         "Não existe usuário no grupo.": "There is no user in the group.",
+        "RELATÓRIOS": "REPORTS",
+        "Loading the report": "Loading the report..."
     },
   },
 };

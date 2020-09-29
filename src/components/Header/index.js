@@ -72,6 +72,11 @@ export default function Header() {
           <img src={logo} alt="Delorenzo" />
           {authorizatePermissions && (
             <Link to="/permissions">{t("PERMISSÕES")}</Link>
+                        
+          )}
+           {authorizatePermissions && (
+            <Link to="/reports">{t("RELATÓRIOS")}</Link>
+                        
           )}
           {authorizateCreateGroups && <Link to="/groups">{t("GRUPOS")}</Link>}
           {/* {authorizatePowerBi && <Link to="/groups">{t("Power Bi")}</Link>} */}
