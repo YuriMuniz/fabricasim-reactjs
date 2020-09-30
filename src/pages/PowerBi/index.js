@@ -14,12 +14,14 @@ function PowerBi() {
     const [error, setError] = useState([]);
     let reportRef = React.createRef();
     const powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
-    const reportId = process.env.REACT_APP_REPORT_ID;
+    //const reportId = process.env.REACT_APP_REPORT_ID;
+    const reportId = "63645674-bee8-4398-9772-c6d637781e56";
     const clientId = process.env.REACT_APP_CLIENT_ID;
     const workspaceId = process.env.REACT_APP_WORKSPACE_ID;
     const username = process.env.REACT_APP_USERNAME;
     const password = process.env.REACT_APP_PASSWORD;
     const token = process.env.REACT_APP_TOKEN;
+    const token_report = "H4sIAAAAAAAEACWTta7FBgBD_-WtqRSmSh3CcMOcbGG8Ya76731qd3vwsf33j5U-w5QWP3_--Izl07e4gslhHu5rq--QqlmhdnG1Lo6VoE20qkyEJt4uOo4DUfq7orFGBdOC9ioq08rN1o7Oi6xRD7zkb2cVOrbstjXXnXarIiSnA3wnN9qE94SsM97FwUftFDCrLlcxdQuzEOrs0b7EbnvLpTBDXGlDTw6zsZKhTnnptF9ggddxRXIkgnBtl3bYMoivsZMnB334Kz8Qbtl2PXbaiG9JTVmw5HmEnOBmArTwYecE7hX7JmmcSB2hTnEe4robIerjL_e5eUKxAdCYAYUCzipFu17Ypr49JlfvZe3A2HhjgQAWYqdfACdwEmVtvoTxUPbAtGTQICDjH8hmHiIeT_U5hUN3Z0BwRGG2WrwxqD0ZsBRgbCyTUm8hW3sZQU3Gj01DUZRXrnOAhD2YNgYJMsHCmHIwJdREIYm9knyOlcDCJL2GMtAVZqWSCp7NVEUViDSg_poXDnZgtJa6zA8T1g9Fp-dY432hWfXvIB7PlwFFM8k01EVkc5KH4bbF8QOuUt5ZPhDFaMzMHOt2GdM5d6q9LE9I6oi-XWUReOexuCo_xUciGx9AEn8abQihpfzbBJ1jAeZ6xeJrrB1oo0SaTE0u26Mo7CzERcZVcXYX4IPIS4mUuwPEFSe87JqsVC3vYn59nub84VDZMytJDCwieYNvLImTZDAR-c7t7hZG_Ky5Xaud8NfPHz_c-sz79Cmf3-nmnTk7U_SNgZVwpwqdU5EEE2YeZqEVaffUJ3EJO9tpDGX8WJNO-CVfSAnmTvaQcZL124rxhU626YBMpiB5Vo9nqC4kFx_YKhCRwaj1ONE-wSSco2nNg_gy-pZ0OuKh8AnysrrwTayCclXu96lvXCvTGcNh_bDj2r5xSYi19ZAx-TNweB5SChUdkNcc-_nxHgyYcLP6IgkIsBNGDPManiXkbWppsjrkJQSeXPoHnUi9oeqIVVxX8lxT7NW3dEosG6YioBbL2izY-HDZkT950iPHtaiBVNK95tBHmsytd1zbHh8hyOiY6qWQFbY1c2nnE7HwZ19u_Euyux2owyuuUY2Culf_9R_mZ25-YwW_lL2rHVOsq2MFR3JtKwT5wzf_q35PPqb7sZa_soTHPOrW1Rhy7ZzYPDglRnLLXoIwsH6teuTb5541ahYZXZEZCCW9byimIQ_rmGvkDFQs_JrxCi6bk-LE0ZK9ItMWh6bJ1RYasZnmoIOVt9ZUv5O4cWQOTWC91rS5EuWkN1JhH0wFkW-_FRs7Xbbdjy9NqaxacUQ4c0qATmX3ioXuBQFWl6y3a36Z004ogUDzHoBMy2DfYRksVPcOPvclXon0BUwxYxXHJFcAsuG0YObcICLmh2YRlqproudD2_ytqZTS2Pjo0k449os4gKHYUCbq2A3bBtpafgW43DYrjLLAp51UDcfKjbxC-YowJgxiRezQfKqDyyzI0YQ61cI-sdD2L-Z__gUIBJ1trgUAAA==.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJtb2Rlcm5FbWJlZCI6ZmFsc2V9fQ==";
     const scope = ["https://analysis.windows.net/powerbi/api/Report.Read.All"];
 
     let reportContainer;
@@ -46,7 +48,7 @@ function PowerBi() {
         const config = {
             type: 'report',
             tokenType: models.TokenType.Embed,
-            accessToken: process.env.REACT_APP_TOKEN_REPORT,
+            accessToken: token_report,
             embedUrl: reportEmbedUrl,
             permissions,
             settings: {
