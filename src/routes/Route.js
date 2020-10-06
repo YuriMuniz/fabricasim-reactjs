@@ -64,8 +64,11 @@ export default function RouteWrapper({
       ["SUPER", "ADMIN+", "ADMIN"].includes(e)
     );
 
-    if (authorizateAccessRequestStudent || authorizateAccessRequestTeacher) {
+    if (authorizateAccessRequestStudent) {
       return <Redirect to="/unauthorized" />;
+    }
+    if(authorizateAccessRequestTeacher){
+      return <Redirect to="/reports" />;
     }
     if (authorizatePermissions) {
       return <Redirect to="/groups" />;

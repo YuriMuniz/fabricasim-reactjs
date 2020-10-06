@@ -1,87 +1,211 @@
 import React, { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import qs from 'querystring';
 import { UserAgentApplication, AuthError, AuthResponse } from "msal";
 import { service, factories, models, IEmbedConfiguration } from "powerbi-client";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+
 import api from "../../services/api";
 import { Container } from './styles';
 
 function PowerBi() {
-    const { t } = useTranslation();
-    const [accessToken, setAccessToken] = useState("");
-    const [embedUrl, setEmbedUrl] = useState("");
-    const [error, setError] = useState([]);
-    let reportRef = React.createRef();
-    const powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
-  
-    const reportId = "63645674-bee8-4398-9772-c6d637781e56";
-   
-    let reportContainer;
-   
+  const { t } = useTranslation();
+  const [accessToken, setAccessToken] = useState("");
+  const [embedUrl, setEmbedUrl] = useState("");
+  const [error, setError] = useState([]);
+  const [label, setLabel] = useState(t('Loading the report'))
+  let reportRef = React.createRef();
+  const powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
 
-    useEffect(() => {
-        
-        load();
-       
-    }, [])
+  const profile = useSelector((state) => state.user.profile);
+  console.log(profile);
+  const reportId = "63645674-bee8-4398-9772-c6d637781e56";
 
-   
+  let reportContainer;
 
-   async function load() {
-        reportContainer = reportRef["current"];
-        const embed = await api.get("get-embed");
-        
-        console.log(embed);
-        const embedConfiguration = {
-            type: "report",
-            tokenType: models.TokenType.Embed,
-            accessToken: embed.data.accessToken,
-            embedUrl: embed.data.embedUrl,
-            id: reportId,
 
+  useEffect(() => {
+    async function fetchData() {
+      const sup = profile.roles.some((r) => ["ADMIN+"].includes(r));
+      const adminMore = profile.roles.some((r) => ["ADMIN+"].includes(r));
+      const admin = profile.roles.some((r) => ["ADMIN"].includes(r));
+      const teacher = profile.roles.some((r) => ["TEACHER"].includes(r));
+      if (adminMore || sup) {
+        const filter = {
+          $schema: "http://powerbi.com/product/schema#basic",
+          target: {
+            table: "Groups",
+            column: "GroupDescription"
+          },
+          
+          values: [""]
         };
+        load(filter);
+        return;
+      }
+      if (admin && teacher) {
+        let groupIds = [];
+        const groups = await api.get(
+          `groups-by-owner/?id=${profile.id}`,
+          {}
+        );
+        console.log(groups.data);
+        for (const group of groups.data) {
+          groupIds.push(group.id)
+        }
 
-        console.log("chegou");
-        const report = powerbi.embed(reportContainer, embedConfiguration);
+        const userGroups = await api.get(
+          `user-group-by-user/?id=${profile.id}`,
+          {}
+        );
+        console.log(userGroups.data);
+        for (const userGroup of userGroups.data) {
+          groupIds.push(userGroup.group_Id);
+        }
 
-        // Clear any other loaded handler events
-        report.off("loaded");
+        if (groupIds.length === 0) {
+          setLabel("Usuário não criou nenhum grupo e não pertence a nenhum.")
+        } else {
+          const filter = {
+            $schema: "http://powerbi.com/product/schema#basic",
+            target: {
+              table: "Groups",
+              column: "Id"
+            },
+            operator: "In",
+            values: groupIds
+          };
 
-        // Triggers when a content schema is successfully loaded
-        report.on("loaded", function () {
-            console.log("Report load successful");
-        });
+          load(filter);
+          return;
+        }
 
-        // Clear any other rendered handler events
-        report.off("rendered");
 
-        // Triggers when a content is successfully embedded in UI
-        report.on("rendered", function () {
-            console.log("Report render successful");
-        });
+      }
+      if (admin) {
+        let groupIds = [];
+        const groups = await api.get(
+          `groups-by-owner/?id=${profile.id}`,
+          {}
+        );
+        console.log(groups.data);
+        for (const group of groups.data) {
+          groupIds.push(group.id)
+        }
 
-        // Clear any other error handler event
-        report.off("error");
+        if (groupIds.length === 0) {
+          setLabel("Usuário não criou nenhum grupo.");
+        } else {
+          const filter = {
+            $schema: "http://powerbi.com/product/schema#basic",
+            target: {
+              table: "Groups",
+              column: "Id"
+            },
+            operator: "In",
+            values: groupIds
+          };
+          load(filter);
+          return;
+        }
 
-        // Below patch of code is for handling errors that occur during embedding
-        report.on("error", function (event) {
-            const errorMsg = event.detail;
+      }
 
-            // Use errorMsg variable to log error in any destination of choice
-            console.error(errorMsg);
-        });
+      if (teacher) {
+        let groupIds = [];
+        const userGroups = await api.get(
+          `user-group-by-user/?id=${profile.id}`,
+          {}
+        );
+        console.log(userGroups.data);
+        for (const userGroup of userGroups.data) {
+          groupIds.push(userGroup.group_Id);
+        }
+        if (groupIds.length === 0) {
+          setLabel("Usuário não pertence a nenhum grupo.");
+        } else {
+          const filter = {
+            $schema: "http://powerbi.com/product/schema#basic",
+            target: {
+              table: "Groups",
+              column: "Id"
+            },
+            operator: "In",
+            values: groupIds
+          };
+          load(filter);
+          return;
+        }
+
+      }
+
 
     }
+    fetchData()
 
 
-    return (
-        <Container
-            id="reportContainer"
-            ref={reportRef} >
-            {t('Loading the report')}
-        </Container>
-    );
+
+  }, [])
+
+
+
+  async function load(filter) {
+    reportContainer = reportRef["current"];
+    const embed = await api.get("get-embed");
+
+    console.log(embed);
+    const embedConfiguration = {
+      type: "report",
+      tokenType: models.TokenType.Embed,
+      accessToken: embed.data.accessToken,
+      embedUrl: embed.data.embedUrl,
+      id: reportId,
+
+    };
+
+
+    const report = powerbi.embed(reportContainer, embedConfiguration);
+    //console.log(report.getPages());
+
+
+
+    report.on("loaded", function () {
+      report.setFilters([filter]).catch(function (errors) {
+        console.log(errors);
+      });
+    });
+
+
+    report.off("rendered");
+
+
+    report.on("rendered", function () {
+
+    });
+
+
+    report.off("error");
+
+
+    report.on("error", function (event) {
+      const errorMsg = event.detail;
+
+
+      console.error(errorMsg);
+    });
+
+  }
+
+
+  return (
+    <Container
+      id="reportContainer"
+      ref={reportRef} >
+      {t(label)}
+    </Container>
+  );
 }
 
 export default PowerBi;

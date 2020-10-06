@@ -107,7 +107,10 @@ const resources = {
       "Erro ao atribuir fabricoin": "Erro ao atribuir fabricoin.",
       "Não existe usuário no grupo.": "Não existe usuário no grupo.",
       "RELATÓRIOS": "RELATÓRIOS",
-      "Loading the report": "Carregando o relatório..."
+      "Loading the report": "Carregando o relatório...",
+      "Usuário não pertencente a nenhum grupo.": "Usuário não pertencente a nenhum grupo.",
+      "Usuário não criou nenhum grupo e não pertence a nenhum.": "Usuário não criou nenhum grupo e não pertence a nenhum.",
+      "Usuário não criou nenhum grupo.": "Usuário não criou nenhum grupo."
     },
   },
   es: {
@@ -216,7 +219,10 @@ const resources = {
         "Erro ao atribuir fabricoin": "Error al asignar fabricoin",
         "Não existe usuário no grupo.": "No hay usuario en el grupo.",
         "RELATÓRIOS": "INFORMES",
-        "Loading the report": "Cargando el informe..."
+        "Loading the report": "Cargando el informe...",
+        "Usuário não pertencente a nenhum grupo.": "Usuario no pertenece a ningún grupo.",
+        "Usuário não criou nenhum grupo e não pertence a nenhum.": "Usuario no ha creado ningún grupo y no pertenece a ningún.",
+        "Usuário não criou nenhum grupo.": "Usuario no ha creado ningún grupo."
     },
   },
   en: {
@@ -327,7 +333,10 @@ const resources = {
         "Erro ao atribuir fabricoin": "Error assigning fabricoin.",
         "Não existe usuário no grupo.": "There is no user in the group.",
         "RELATÓRIOS": "REPORTS",
-        "Loading the report": "Loading the report..."
+        "Loading the report": "Loading the report...",
+        "Usuário não pertencente a nenhum grupo.": "User does not belong to any groups.",
+        "Usuário não criou nenhum grupo e não pertence a nenhum.": "User has not created any groups and does not belong to any",
+        "Usuário não criou nenhum grupo.": "User has not created any groups."
     },
   },
 };

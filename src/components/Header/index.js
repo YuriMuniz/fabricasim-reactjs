@@ -74,7 +74,7 @@ export default function Header() {
             <Link to="/permissions">{t("PERMISSÕES")}</Link>
                         
           )}
-           {authorizatePermissions && (
+           {authorizatePowerBi && (
             <Link to="/reports">{t("RELATÓRIOS")}</Link>
                         
           )}
