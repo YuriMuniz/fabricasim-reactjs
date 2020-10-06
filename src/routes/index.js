@@ -41,7 +41,7 @@ export default function Routes() {
       />
       <Route
         path="/reports"
-        component={Authorization(PowerBi, ["SUPER", "ADMIN+", "ADMIN", "TEACHER"])}
+        component={Authorization(PowerBi, ["SUPER", "ADMIN+", "ADMIN", "TEACHER", "STUDENT"])}
         isPrivate
       />
 

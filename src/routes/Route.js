@@ -48,6 +48,7 @@ export default function RouteWrapper({
   }
 
   if (signed && !isPrivate) {
+    console.log(profile.roles);
     const authorizateAccessRequestStudent =
       profile.roles.some((e) => ["STUDENT"].includes(e)) &&
       profile.roles.length === 1;
@@ -65,7 +66,7 @@ export default function RouteWrapper({
     );
 
     if (authorizateAccessRequestStudent) {
-      return <Redirect to="/unauthorized" />;
+      return <Redirect to="/reports" />;
     }
     if(authorizateAccessRequestTeacher){
       return <Redirect to="/reports" />;

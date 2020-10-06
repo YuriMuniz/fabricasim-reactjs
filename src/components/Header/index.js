@@ -62,7 +62,7 @@ export default function Header() {
   );
 
   const authorizatePowerBi = profile.roles.some((e) =>
-  ["SUPER", "ADMIN+", "ADMIN", "TEACHER"].includes(e)
+  ["SUPER", "ADMIN+", "ADMIN", "TEACHER", "STUDENT"].includes(e)
 );
 
   return (

@@ -32,6 +32,7 @@ function PowerBi() {
       const adminMore = profile.roles.some((r) => ["ADMIN+"].includes(r));
       const admin = profile.roles.some((r) => ["ADMIN"].includes(r));
       const teacher = profile.roles.some((r) => ["TEACHER"].includes(r));
+      const student = profile.roles.some((r) => ["STUDENT"].includes(r));
       if (adminMore || sup) {
         const filter = {
           $schema: "http://powerbi.com/product/schema#basic",
@@ -39,7 +40,7 @@ function PowerBi() {
             table: "Groups",
             column: "GroupDescription"
           },
-          
+
           values: [""]
         };
         load(filter);
@@ -138,6 +139,20 @@ function PowerBi() {
           load(filter);
           return;
         }
+
+      }
+      if (student) {
+        const filter = {
+          $schema: "http://powerbi.com/product/schema#basic",
+          target: {
+            table: "UserProfiles",
+            column: "Id"
+          },
+          operator: "In",
+          values: [profile.id]
+        };
+        load(filter);
+        return;
 
       }
 
