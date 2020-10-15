@@ -110,7 +110,8 @@ const resources = {
       "Loading the report": "Carregando o relatório...",
       "Usuário não pertencente a nenhum grupo.": "Usuário não pertencente a nenhum grupo.",
       "Usuário não criou nenhum grupo e não pertence a nenhum.": "Usuário não criou nenhum grupo e não pertence a nenhum.",
-      "Usuário não criou nenhum grupo.": "Usuário não criou nenhum grupo."
+      "Usuário não criou nenhum grupo.": "Usuário não criou nenhum grupo.",
+      "Esse grupo já existe.": "Esse grupo já existe."
     },
   },
   es: {
@@ -222,7 +223,8 @@ const resources = {
         "Loading the report": "Cargando el informe...",
         "Usuário não pertencente a nenhum grupo.": "Usuario no pertenece a ningún grupo.",
         "Usuário não criou nenhum grupo e não pertence a nenhum.": "Usuario no ha creado ningún grupo y no pertenece a ningún.",
-        "Usuário não criou nenhum grupo.": "Usuario no ha creado ningún grupo."
+        "Usuário não criou nenhum grupo.": "Usuario no ha creado ningún grupo.",
+        "Esse grupo já existe.": "Este grupo ya existe."
     },
   },
   en: {
@@ -336,7 +338,8 @@ const resources = {
         "Loading the report": "Loading the report...",
         "Usuário não pertencente a nenhum grupo.": "User does not belong to any groups.",
         "Usuário não criou nenhum grupo e não pertence a nenhum.": "User has not created any groups and does not belong to any",
-        "Usuário não criou nenhum grupo.": "User has not created any groups."
+        "Usuário não criou nenhum grupo.": "User has not created any groups.",
+        "Esse grupo já existe.": "This group already exists."
     },
   },
 };

@@ -404,8 +404,16 @@ export default function CreateGroups() {
       setCoursesId([]);
       toast.success(t("Grupo salvo"));
     } catch (err) {
-      toast.error(t("Erro ao salvar grupo"));
-      setLoadingSaveGroup(false);
+      console.log(err.response.data.message);
+      if(err.response.data.message==='Group exist'){
+        setLoadingSaveGroup(false);
+        return toast.error(t('Esse grupo já existe.'));
+      }else{
+        setLoadingSaveGroup(false);
+        toast.error(t("Erro ao salvar grupo"));
+      }
+      
+     
     }
     setLoadingSaveGroup(false);
   }
