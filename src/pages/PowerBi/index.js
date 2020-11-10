@@ -21,7 +21,7 @@ function PowerBi() {
 
   const profile = useSelector((state) => state.user.profile);
   console.log(profile);
-  const reportId = "63645674-bee8-4398-9772-c6d637781e56";
+  const reportId = "cc4136b5-5d78-4cbe-a251-967d7337ba5d";
 
   let reportContainer;
 
